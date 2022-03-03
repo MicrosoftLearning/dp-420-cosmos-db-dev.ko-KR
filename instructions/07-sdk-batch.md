@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK를 사용하여 여러 지점 작업을 대량 처리
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: 12d88545282991a14b758d05d27625b633edc7a3
-ms.sourcegitcommit: 9e320ed456eaaab98e80324267c710628b557b1c
+ms.openlocfilehash: 9ad507d58db5b7522e2a6e24231e18caaa86e36a
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139039332"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138025059"
 ---
 # <a name="batch-multiple-point-operations-together-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK를 사용하여 여러 지점 작업을 대량 처리
 
@@ -19,7 +19,7 @@ ms.locfileid: "139039332"
 
 **DP-420** 에 대한 랩 코드 리포지토리를 이 랩에서 작업 중인 환경에 아직 복제하지 않은 경우 다음 단계를 수행합니다. 그렇지 않으면 이전에 복제한 폴더를 **Visual Studio Code** 에서 엽니다.
 
-1. **Visual Studio Code** 를 시작합니다.
+1. **Visual Studio Code** 시작
 
     > &#128221; Visual Studio Code 인터페이스에 익숙하지 않은 경우 [시작 설명서][code.visualstudio.com/docs/getstarted]를 검토하세요.
 
@@ -39,10 +39,10 @@ ms.locfileid: "139039332"
 
     | **설정** | **값** |
     | ---: | :--- |
-    | **구독** | 기존 Azure 구독 |
-    | **리소스 그룹** | 기존 리소스 그룹을 선택하거나 새로 만듭니다. |
-    | **계정 이름** | 전역적으로 고유한 이름을 입력합니다. |
-    | **위치** | 사용 가능한 지역을 선택합니다. |
+    | **구독** | *기존 Azure 구독* |
+    | **리소스 그룹** | *기존 리소스 그룹을 선택하거나 새로 만듭니다.* |
+    | **계정 이름** | *전역적으로 고유한 이름을 입력합니다.* |
+    | **위치** | *사용 가능한 지역을 선택합니다.* |
     | **용량 모드** | *프로비전된 처리량* |
     | **무료 계층 할인 적용** | *적용 안 함* |
 
@@ -52,7 +52,7 @@ ms.locfileid: "139039332"
 
 1. 새로 만든 **Azure Cosmos DB** 계정 리소스로 이동하여 **키** 창으로 이동합니다.
 
-1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히 다음 사항에 주의하세요.
+1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히:
 
     1. **URI** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **엔드포인트** 값을 사용합니다.
 
@@ -149,13 +149,7 @@ ms.locfileid: "139039332"
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
     
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);
         
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);
@@ -258,13 +252,7 @@ ms.locfileid: "139039332"
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
     
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);
         
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);

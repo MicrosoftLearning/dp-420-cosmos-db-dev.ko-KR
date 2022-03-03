@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK를 사용하여 다중 지역에 연결
   module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 758a51237ee4c8b4e4eb173addb1e66fbcafbe9e
-ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
+ms.openlocfilehash: 8d6439943bc1baac6e5c1cdb8e40f98cf6665119
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139057401"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138025086"
 ---
 # <a name="connect-to-different-regions-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK를 사용하여 다중 지역에 연결
 
@@ -19,7 +19,7 @@ Azure Cosmos DB SQL API 계정에 대해 지역 중복성을 사용하도록 설
 
 **DP-420** 에 대한 랩 코드 리포지토리를 이 랩에서 작업 중인 환경에 아직 복제하지 않은 경우 다음 단계를 수행합니다. 그렇지 않으면 이전에 복제한 폴더를 **Visual Studio Code** 에서 엽니다.
 
-1. **Visual Studio Code** 를 시작합니다.
+1. **Visual Studio Code** 시작
 
     > &#128221; Visual Studio Code 인터페이스에 익숙하지 않은 경우 [시작 설명서][code.visualstudio.com/docs/getstarted]를 검토하세요.
 
@@ -31,7 +31,7 @@ Azure Cosmos DB SQL API 계정에 대해 지역 중복성을 사용하도록 설
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API 계정 만들기
 
-Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이터베이스 서비스입니다. Azure Cosmos DB 계정을 처음으로 프로비전할 때 계정을 지원할 API(예: **Mongo API** 또는 **SQL API**)를 선택합니다. Azure Cosmos DB SQL API 계정 프로비저닝이 완료되면 엔드포인트 및 키를 검색하고 이를 사용하여 .NET용 Azure SDK 또는 선택한 다른 SDK를 사용하여 Azure Cosmos DB SQL API 계정에 연결할 수 있습니다.
+Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이터베이스 서비스입니다. Azure Cosmos DB 계정을 처음으로 프로비전할 때 계정을 지원할 API(예: **Mongo API** 또는 **SQL API**)를 선택합니다. Azure Cosmos DB SQL API 계정 프로비전이 완료되면 엔드포인트 및 키를 검색하고 이를 사용하여 .NET용 Azure SDK 또는 선택한 다른 SDK를 사용하여 Azure Cosmos DB SQL API 계정에 연결할 수 있습니다.
 
 1. 새 웹 브라우저 창 또는 탭에서 Azure Portal(``portal.azure.com``)로 이동합니다.
 
@@ -41,10 +41,10 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
     | **설정** | **값** |
     | ---: | :--- |
-    | **구독** | 기존 Azure 구독 |
-    | **리소스 그룹** | 기존 리소스 그룹을 선택하거나 새로 만듭니다. |
-    | **계정 이름** | 전역적으로 고유한 이름을 입력합니다. |
-    | **위치** | 사용 가능한 지역을 선택합니다. |
+    | **구독** | *기존 Azure 구독* |
+    | **리소스 그룹** | *기존 리소스 그룹을 선택하거나 새로 만듭니다.* |
+    | **계정 이름** | *전역적으로 고유한 이름을 입력합니다.* |
+    | **위치** | *사용 가능한 지역을 선택합니다.* |
     | **용량 모드** | *프로비전된 처리량* |
     | **무료 계층 할인 적용** | *적용 안 함* |
 
@@ -66,21 +66,21 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
 1. 리소스 블레이드에서 **데이터 탐색기** 창으로 이동합니다.
 
-1. **데이터 탐색기** 창에서 **새 컨테이너** 를 선택합니다.
+1. **데이터 탐색기** 페이지에서 **새 컨테이너** 를 선택합니다.
 
 1. **새 컨테이너** 창에서 각 설정에 대해 다음 값을 입력한 다음, **확인** 을 선택합니다.
 
     | **설정** | **값** |
     | --: | :-- |
-    | **데이터베이스 ID** | 새 &vert; cosmicworks 만들기  |
-    | **컨테이너 간에 처리량 공유** | 선택 안 함 |
+    | **데이터베이스 ID** | *새로 만들기* &vert; *cosmicworks* |
+    | **컨테이너 간에 처리량 공유** | *선택 안 함* |
     | **컨테이너 ID** | *products* |
     | **파티션 키** | */categoryId* |
-    | **컨테이너 처리량** | 수동 &vert; *400*  |
+    | **컨테이너 처리량** | *수동* &vert; *400* |
 
-1. **데이터 탐색기** 창으로 돌아가서 **cosmicworks** 데이터베이스 노드를 확장한 다음, 계층 내의 **products** 컨테이너 노드를 관찰합니다.
+1. **데이터 탐색기** 창으로 돌아가서 **cosmicworks** 데이터베이스 노드를 확장한 다음, 계층 내의 **제품** 컨테이너 노드를 관찰합니다.
 
-1. **데이터 탐색기** 창에서 **cosmicworks** 데이터베이스 노드를 확장하고 **products** 컨테이너 노드를 확장한 다음, **항목** 을 관찰합니다.
+1. **데이터 탐색기** 창에서 **cosmicworks** 데이터베이스 노드를 확장하고 **제품** 컨테이너 노드를 확장한 다음, **항목** 을 관찰합니다.
 
 1. 계속해서 **데이터 탐색기** 창의 명령 모음에서 **새 항목** 을 선택합니다. 편집기에서 자리 표시자 JSON 항목을 다음 콘텐츠로 바꿉니다.
 
@@ -101,7 +101,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
 1. 리소스 블레이드에서 **키** 창으로 이동합니다.
 
-1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히 다음 사항에 주의하세요.
+1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히:
 
     1. **URI** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **엔드포인트** 값을 사용합니다.
 
@@ -174,8 +174,6 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     CosmosClientOptions options = new () 
     { 
         ApplicationPreferredRegions = regions
-        , RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     ```
 
@@ -226,8 +224,6 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     CosmosClientOptions options = new () 
     { 
         ApplicationPreferredRegions = regions
-        , RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     
     using CosmosClient client = new(endpoint, key, options);
