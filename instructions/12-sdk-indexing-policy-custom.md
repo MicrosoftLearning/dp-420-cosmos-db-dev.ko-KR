@@ -2,12 +2,12 @@
 lab:
   title: 포털에서 Azure Cosmos DB SQL API 컨테이너의 인덱스 정책 구성
   module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 0a4f1118d4a2f726df12dbeec1d3d96918450e12
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 1d14cf0d3c98832cb46c06178845b56b9748b0d3
+ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025019"
+ms.lasthandoff: 02/17/2022
+ms.locfileid: "139057392"
 ---
 # <a name="configure-an-azure-cosmos-db-sql-api-containers-index-policy-using-the-sdk"></a>SDK를 사용하여 Azure Cosmos DB SQL API 컨테이너의 인덱스 정책 구성
 
@@ -54,7 +54,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
 1. 새로 만든 **Azure Cosmos DB** 계정 리소스로 이동하여 **키** 창으로 이동합니다.
 
-1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히:
+1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히 다음 사항에 주의하세요.
 
     1. **URI** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **엔드포인트** 값을 사용합니다.
 
@@ -106,7 +106,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     );
     ```
 
-1. [Path][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.includedpath.path] 속성이 [policy][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.includedpath.path] 변수에 있는 [IncludedPaths][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.includedpath] 컬렉션 속성의 **/name/?** 값으로 설정된 [IncludedPath][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.includedpath] 형식의 새 개체를 추가합니다. to the <bpt id="p1">[</bpt>IncludedPaths<ept id="p1">][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.includedpaths]</ept> collection property in the <bpt id="p2">**</bpt>policy<ept id="p2">**</ept> variable:
+1. [Path][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.includedpath.path] 속성이 **/name/?** 의 값으로 설정된 [IncludedPath][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.includedpath] 형식의 새 개체를 추가합니다. **policy** 변수에 있는 [IncludedPaths][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.includedpaths] 컬렉션 속성에 대해 다음을 수행합니다.
 
     ```
     policy.IncludedPaths.Add(
@@ -148,7 +148,13 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);
+    CosmosClientOptions clientoptions = new CosmosClientOptions()
+    {
+        RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
+    };
+
+    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
 
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     

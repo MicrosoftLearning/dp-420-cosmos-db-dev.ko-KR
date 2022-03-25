@@ -60,7 +60,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
     1. **PRIMARY KEY** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **키** 값을 사용합니다.
 
-1. 최소화하되 브라우저 창을 닫지는 마세요. 다음 단계에서 백그라운드 워크로드를 시작한 후 몇 분 후에 Azure Portal로 돌아가기
+1. 최소화하되 브라우저 창을 닫지는 마세요. 다음 단계에서 백그라운드 워크로드를 시작한 후 몇 분 후에 Azure Portal로 돌아올 것입니다
 
 
 ## <a name="import-the-microsoftazurecosmos-library-into-a-net-script"></a>Microsoft.Azure.Cosmos 라이브러리를 .NET 스크립트로 가져오기
@@ -79,7 +79,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
     ```
 
-## <a name="run-a-script-to-create-menu-driven-options-to-insert-and-delete-documents"></a>스크립트를 실행하여 문서를 삽입하고 삭제하는 메뉴 기반 옵션을 만듭니다.
+## <a name="run-a-script-to-create-menu-driven-options-to-insert-and-delete-documents"></a>스크립트를 실행하여 문서를 삽입하고 삭제하는 메뉴 기반 옵션 만들기.
 
 애플리케이션을 실행하기 전에 Azure Cosmos DB 계정으로 연결해야 합니다. 
 

@@ -17,7 +17,7 @@ ms.locfileid: "138025024"
 
 ## <a name="prepare-your-development-environment"></a>개발 환경 준비
 
-**DP-420** 에 대한 랩 코드 리포지토리를 이 랩에서 작업 중인 환경에 아직 복제하지 않은 경우 다음 단계를 수행합니다. 그렇지 않으면 이전에 복제한 폴더를 **Visual Studio Code** 에서 엽니다.
+**DP-420** 에 대한 랩 코드 리포지토리를 이 랩에서 작업 중인 환경에 아직 복제하지 않은 경우 다음 단계를 수행합니다. 이미 복제했다면 이전에 복제한 폴더를 **Visual Studio Code** 에서 엽니다.
 
 1. **Visual Studio Code** 를 시작합니다.
 
@@ -31,7 +31,7 @@ ms.locfileid: "138025024"
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API 계정 만들기
 
-Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이터베이스 서비스입니다. Azure Cosmos DB 계정을 처음으로 프로비저닝할 때 계정을 지원할 API(예: **Mongo API** 또는 **SQL API**)를 선택합니다. Azure Cosmos DB SQL API 계정 프로비저닝이 완료되면 엔드포인트 및 키를 검색하고 이를 사용하여 .NET용 Azure SDK 또는 선택한 다른 SDK를 사용하여 Azure Cosmos DB SQL API 계정에 연결할 수 있습니다.
+Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이터베이스 서비스입니다. Azure Cosmos DB 계정을 처음으로 프로비전할 때 계정을 지원할 API(예: **Mongo API** 또는 **SQL API**)를 선택합니다. Azure Cosmos DB SQL API 계정 프로비전이 완료되면 엔드포인트 및 키를 검색하고 이를 사용하여 .NET용 Azure SDK 또는 선택한 다른 SDK를 사용하여 Azure Cosmos DB SQL API 계정에 연결할 수 있습니다.
 
 1. 새 웹 브라우저 창 또는 탭에서 Azure Portal(``portal.azure.com``)로 이동합니다.
 
@@ -54,7 +54,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
 1. 새로 만든 **Azure Cosmos DB** 계정 리소스로 이동하여 **키** 창으로 이동합니다.
 
-1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히:
+1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히 다음에 주의합니다.
 
     1. **URI** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **엔드포인트** 값을 사용합니다.
 
@@ -84,7 +84,7 @@ NuGet 웹 사이트에는 .NET 애플리케이션으로 가져올 수 있는 검
 
 1. **Visual Studio Code** 의 **탐색기** 창에서 **04-sdk-connect** 폴더로 이동합니다.
 
-1. **04-sdk-connect** 폴더의 상황에 맞는 메뉴를 연 다음, **통합 터미널에서 열기** 를 선택하여 새 터미널 인스턴스를 엽니다.
+1. **04-sdk-connect** 폴더의 컨텍스트 메뉴를 연 다음, **통합 터미널에서 열기** 를 선택하여 새 터미널 인스턴스를 엽니다.
 
     > &#128221; 이 명령은 시작 디렉터리가 **04-sdk-connect** 폴더로 이미 설정된 터미널을 엽니다.
 
@@ -182,7 +182,7 @@ NuGet 웹 사이트에는 .NET 애플리케이션으로 가져올 수 있는 검
 
 Azure Cosmos DB SQL API 계정에 연결하는 .NET 코드가 완료되었으므로 스크립트를 테스트할 수 있습니다. 이 스크립트는 계정 이름과 쓰기 가능한 첫 번째 지역의 이름을 출력합니다. 계정을 만들 때 위치를 지정했다면 이 스크립트의 결과로 동일한 위치 값이 인쇄되어야 합니다.
 
-1. **Visual Studio Code** 에서 **04-sdk-connect** 폴더의 상황에 맞는 메뉴를 연 다음, **통합 터미널에서 열기** 를 선택하여 새 터미널 인스턴스를 엽니다.
+1. **Visual Studio Code** 에서 **04-sdk-connect** 폴더의 컨텍스트 메뉴를 연 다음, **통합 터미널에서 열기** 를 선택하여 새 터미널 인스턴스를 엽니다.
 
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 명령을 사용하여 프로젝트를 빌드하고 실행합니다.
 

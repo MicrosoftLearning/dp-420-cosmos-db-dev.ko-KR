@@ -81,7 +81,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
 1. **데이터 탐색기** 창으로 돌아가서 **cosmicworks** 데이터베이스 노드를 확장한 다음, 계층 내의 **productslease** 컨테이너 노드를 관찰합니다.
 
-1. Azure 포털의 **홈** 으로 돌아갑니다.
+1. Azure Portal의 **홈** 으로 돌아갑니다.
 
 ## <a name="create-an-azure-function-app-and-azure-cosmos-db-triggered-function"></a>Azure Function 앱 및 Azure Cosmos DB 트리거 함수 만들기
 

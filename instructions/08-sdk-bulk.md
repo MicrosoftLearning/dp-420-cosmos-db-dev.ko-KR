@@ -2,16 +2,16 @@
 lab:
   title: Azure Cosmos DB SQL API SDK를 사용하여 여러 문서를 대량으로 이동
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: db439a89114c0256884ad676c67d6e4ad6c27844
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: a602f5e827c5183cfb2af8220490b7b672ee2638
+ms.sourcegitcommit: 9e320ed456eaaab98e80324267c710628b557b1c
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025036"
+ms.lasthandoff: 02/17/2022
+ms.locfileid: "139039325"
 ---
 # <a name="move-multiple-documents-in-bulk-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK를 사용하여 여러 문서를 대량으로 이동
 
-대량 작업을 수행하는 방법을 알아보는 가장 쉬운 방법은 클라우드의 Azure Cosmos DB SQL API 계정에 많은 문서를 푸시하는 것입니다. SDK의 대량 기능을 사용하면 [System.Threading.Tasks][docs.microsoft.com/dotnet/api/system.threading.tasks] 네임스페이스의 약간의 도움으로 이 작업을 수행할 수 있습니다.
+대량 작업을 수행하는 방법을 알아보는 가장 쉬운 방법은 클라우드의 Azure Cosmos DB SQL API 계정에 많은 문서를 푸시하는 것입니다. SDK의 대량 기능을 사용하면 [System.Threading.Tasks][docs.microsoft.com/dotnet/api/system.threading.tasks] 네임스페이스를 활용하여 이 작업을 수행할 수 있습니다.
 
 이 랩에서는 NuGet [Bogus][nuget.org/packages/bogus/33.1.1] 라이브러리를 사용하여 가상의 데이터를 생성하고 Azure Cosmos DB 계정에 배치합니다.
 
@@ -19,7 +19,7 @@ ms.locfileid: "138025036"
 
 **DP-420** 에 대한 랩 코드 리포지토리를 이 랩에서 작업 중인 환경에 아직 복제하지 않은 경우 다음 단계를 수행합니다. 그렇지 않으면 이전에 복제한 폴더를 **Visual Studio Code** 에서 엽니다.
 
-1. **Visual Studio Code** 시작
+1. **Visual Studio Code** 를 시작합니다.
 
     > &#128221; Visual Studio Code 인터페이스에 익숙하지 않은 경우 [시작 설명서][code.visualstudio.com/docs/getstarted]를 검토하세요.
 
@@ -39,10 +39,10 @@ ms.locfileid: "138025036"
 
     | **설정** | **값** |
     | ---: | :--- |
-    | **구독** | *기존 Azure 구독* |
-    | **리소스 그룹** | *기존 리소스 그룹을 선택하거나 새로 만듭니다.* |
-    | **계정 이름** | *전역적으로 고유한 이름을 입력합니다.* |
-    | **위치** | *사용 가능한 지역을 선택합니다.* |
+    | **구독** | 기존 Azure 구독 |
+    | **리소스 그룹** | 기존 리소스 그룹을 선택하거나 새로 만듭니다. |
+    | **계정 이름** | 전역적으로 고유한 이름을 입력합니다. |
+    | **위치** | 사용 가능한 지역을 선택합니다. |
     | **용량 모드** | *프로비전된 처리량* |
     | **무료 계층 할인 적용** | *적용 안 함* |
 
@@ -52,7 +52,7 @@ ms.locfileid: "138025036"
 
 1. 새로 만든 **Azure Cosmos DB** 계정 리소스로 이동하여 **키** 창으로 이동합니다.
 
-1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히:
+1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히 다음 사항에 주의하세요.
 
     1. **URI** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **엔드포인트** 값을 사용합니다.
 
@@ -64,8 +64,8 @@ ms.locfileid: "138025036"
 
     | **설정** | **값** |
     | ---: | :--- |
-    | **데이터베이스 ID** | *새로 만들기* &vert; *cosmicworks* |
-    | **컨테이너 간에 처리량 공유** | *선택 안 함* |
+    | **데이터베이스 ID** | 새 &vert; cosmicworks 만들기  |
+    | **컨테이너 간에 처리량 공유** | 선택 안 함 |
     | **컨테이너 ID** | *products* |
     | **파티션 키** | */categoryId* |
     | **컨테이너 처리량** | *자동 크기 조정* &vert; *4000* |
@@ -120,6 +120,8 @@ ms.locfileid: "138025036"
     CosmosClientOptions options = new () 
     { 
         AllowBulkExecution = true 
+        , RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     ```
 
@@ -198,6 +200,8 @@ ms.locfileid: "138025036"
     CosmosClientOptions options = new () 
     { 
         AllowBulkExecution = true 
+        , RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     
     CosmosClient client = new (endpoint, key, options);  

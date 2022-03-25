@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK를 사용하여 문서 생성 및 업데이트
   module: Module 4 - Implement Azure Cosmos DB SQL API point operations
-ms.openlocfilehash: 5aa8e7ec314243dce08e3d14a561e45d2ac83049
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: b4b167618243026dd3b2d9510da1b73555b1c136
+ms.sourcegitcommit: 9e320ed456eaaab98e80324267c710628b557b1c
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025049"
+ms.lasthandoff: 02/17/2022
+ms.locfileid: "139039326"
 ---
 # <a name="create-and-update-documents-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK를 사용하여 문서 생성 및 업데이트
 
@@ -19,7 +19,7 @@ ms.locfileid: "138025049"
 
 **DP-420** 에 대한 랩 코드 리포지토리를 이 랩에서 작업 중인 환경에 아직 복제하지 않은 경우 다음 단계를 수행합니다. 그렇지 않으면 이전에 복제한 폴더를 **Visual Studio Code** 에서 엽니다.
 
-1. **Visual Studio Code** 시작
+1. **Visual Studio Code** 를 시작합니다.
 
     > &#128221; Visual Studio Code 인터페이스에 익숙하지 않은 경우 [시작 설명서][code.visualstudio.com/docs/getstarted]를 검토하세요.
 
@@ -31,7 +31,7 @@ ms.locfileid: "138025049"
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API 계정 만들기
 
-Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이터베이스 서비스입니다. Azure Cosmos DB 계정을 처음으로 프로비전할 때 계정을 지원할 API(예: **Mongo API** 또는 **SQL API**)를 선택합니다. Azure Cosmos DB SQL API 계정 프로비전이 완료되면 엔드포인트 및 키를 검색하고 이를 사용하여 .NET용 Azure SDK 또는 선택한 다른 SDK를 사용하여 Azure Cosmos DB SQL API 계정에 연결할 수 있습니다.
+Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이터베이스 서비스입니다. Azure Cosmos DB 계정을 처음으로 프로비전할 때 계정을 지원할 API(예: **Mongo API** 또는 **SQL API**)를 선택합니다. Azure Cosmos DB SQL API 계정 프로비저닝이 완료되면 엔드포인트 및 키를 검색하고 이를 사용하여 .NET용 Azure SDK 또는 선택한 다른 SDK를 사용하여 Azure Cosmos DB SQL API 계정에 연결할 수 있습니다.
 
 1. 새 웹 브라우저 창 또는 탭에서 Azure Portal(``portal.azure.com``)로 이동합니다.
 
@@ -41,10 +41,10 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
     | **설정** | **값** |
     | ---: | :--- |
-    | **구독** | *기존 Azure 구독* |
-    | **리소스 그룹** | *기존 리소스 그룹을 선택하거나 새로 만듭니다.* |
-    | **계정 이름** | *전역적으로 고유한 이름을 입력합니다.* |
-    | **위치** | *사용 가능한 지역을 선택합니다.* |
+    | **구독** | 기존 Azure 구독 |
+    | **리소스 그룹** | 기존 리소스 그룹을 선택하거나 새로 만듭니다. |
+    | **계정 이름** | 전역적으로 고유한 이름을 입력합니다. |
+    | **위치** | 사용 가능한 지역을 선택합니다. |
     | **용량 모드** | *프로비전된 처리량* |
     | **무료 계층 할인 적용** | *적용 안 함* |
 
@@ -54,7 +54,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
 1. 새로 만든 **Azure Cosmos DB** 계정 리소스로 이동하여 **키** 창으로 이동합니다.
 
-1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히:
+1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히 다음 사항에 주의하세요.
 
     1. **URI** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **엔드포인트** 값을 사용합니다.
 
@@ -121,7 +121,13 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);  
+    CosmosClientOptions clientoptions = new CosmosClientOptions()
+    {
+        RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
+    };
+
+    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -205,7 +211,13 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);  
+    CosmosClientOptions clientoptions = new CosmosClientOptions()
+    {
+        RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
+    };
+
+    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -286,7 +298,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     Product saddle = await container.ReadItemAsync<Product>(id, partitionKey);
     ```
 
-1. 정적 **Console.WriteLine** 메서드를 호출하고 형식이 지정된 출력 문자열을 사용하여 안장 개체를 출력합니다.
+1. 정적 **Console.WriteLine** 메서드를 호출하고 형식이 지정된 출력 문자열을 사용하여 saddle 개체를 출력합니다.
 
     ```
     Console.WriteLine($"[{saddle.id}]\t{saddle.name} ({saddle.price:C})");
@@ -301,7 +313,13 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);  
+    CosmosClientOptions clientoptions = new CosmosClientOptions()
+    {
+        RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
+    };
+
+    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -352,7 +370,7 @@ SDK를 학습하는 동안 온라인 Azure Cosmos DB SDK 계정 또는 에뮬레
     | **이름** | Road Saddle |
     | **가격** | $45.99 |
 
-    > &#128221; 이 때는 항목을 만들었기 때문에 이 값을 변경하지 않아야 합니다. 이 연습에서는 이러한 값을 변경합니다.
+    > &#128221; 이 때는 항목을 만들었기 때문에 이 값이 변경되지 않았을 것입니다. 이 연습에서는 이러한 값을 변경합니다.
 
 1. 웹 브라우저 창 또는 탭을 닫습니다.
 
@@ -391,7 +409,13 @@ SDK를 학습하는 동안 온라인 Azure Cosmos DB SDK 계정 또는 에뮬레
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);  
+    CosmosClientOptions clientoptions = new CosmosClientOptions()
+    {
+        RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
+    };
+
+    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
