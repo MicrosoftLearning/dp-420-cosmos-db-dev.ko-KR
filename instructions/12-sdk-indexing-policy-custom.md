@@ -98,7 +98,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     policy.IndexingMode = IndexingMode.Consistent;
     ```
 
-1. [Path][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath.path] 속성이 _ *policy** 변수에 있는 [ExcludedPaths][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.excludedpaths] 컬렉션 속성의 **/** _ 값으로 설정된 [ExcludedPath][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath] 형식의 새 개체를 추가합니다.
+1. [Path][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath.path] 속성이 *policy* 변수의 [ExcludedPaths][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.excludedpaths] 컬렉션 속성에 대한 **/** _ 값으로.
 
     ```
     policy.ExcludedPaths.Add(

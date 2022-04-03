@@ -60,7 +60,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
     1. **PRIMARY KEY** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **키** 값을 사용합니다.
 
-1. 최소화하되 브라우저 창을 닫지는 마세요. 다음 단계에서 백그라운드 워크로드를 시작한 후 몇 분 후에 Azure Portal로 돌아올 것입니다
+1. 최소화하되 브라우저 창을 닫지는 마세요. 다음 단계에서 백그라운드 워크로드를 시작한 후 몇 분 후에 Azure Portal로 돌아올 것입니다.
 
 
 ## <a name="import-the-microsoftazurecosmos-library-into-a-net-script"></a>Microsoft.Azure.Cosmos 라이브러리를 .NET 스크립트로 가져오기

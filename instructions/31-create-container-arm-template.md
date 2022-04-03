@@ -231,7 +231,7 @@ Azure Cosmos DB SQL API 리소스가 배포되면 Azure Portal에서 해당 리�
 
 ## <a name="create-azure-cosmos-db-sql-api-resources-using-bicep-templates"></a>Bicep 템플릿을 사용하여 Azure Cosmos DB SQL API 리소스 만들기
 
-Bicep은 Azure Resource Manager 템플릿보다 더 간단하고 쉽게 Azure 리소스를 배포할 수 있는 효율적인 도메인별 언어입니다. 차이점\[\]을 설명하기 위해 Bicep 및 다른 이름을 사용하여 정확하게 동일한 리소스를 배포합니다.
+Bicep은 Azure Resource Manager 템플릿보다 더 간단하고 쉽게 Azure 리소스를 배포할 수 있는 효율적인 도메인별 언어입니다. 차이점을 설명하기 위해 Bicep 및 다른 이름을 사용하여 정확하게 동일한 리소스를 배포합니다.
 
 > &#128161; 템플릿이 중단되어 구문 오류를 파악할 수 없는 경우 이 [ 템플릿 솔루션][github.com/bicep-template-guide]을 가이드로 사용합니다.
 

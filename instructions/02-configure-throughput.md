@@ -2,12 +2,12 @@
 lab:
   title: Azure Portal을 사용하여 Azure Cosmos DB SQL API에 대한 처리량 구성
   module: Module 2 - Plan and implement Azure Cosmos DB SQL API
-ms.openlocfilehash: 5d9829917435948bebede48324897fb38dd6374b
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 021e34b83692f0e8930362cb54749f81b8ffe945
+ms.sourcegitcommit: 3dcd91627a28a2718744929be8f23b427f701793
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025062"
+ms.lasthandoff: 03/08/2022
+ms.locfileid: "139616131"
 ---
 # <a name="configure-throughput-for-azure-cosmos-db-sql-api-with-the-azure-portal"></a>Azure Portal을 사용하여 Azure Cosmos DB SQL API에 대한 처리량 구성
 
@@ -61,7 +61,7 @@ ms.locfileid: "138025062"
 
 1. **데이터 탐색기** 창으로 돌아가서 계층 내의 **cosmicworks** 데이터베이스 노드를 관찰합니다.
 
-1. **데이터 탐색기** 페이지에서 **새 컨테이너** 를 선택합니다.
+1. **데이터 탐색기** 창에서 **새 컨테이너** 를 선택합니다.
 
 1. **새 컨테이너** 창에서 각 설정에 대해 다음 값을 입력한 다음, **확인** 을 선택합니다.
 
@@ -115,7 +115,7 @@ ms.locfileid: "138025062"
     | **설정** | **값** |
     | --: | :-- |
     | **데이터베이스 ID** | *nothroughputdb* |
-    | **컨테이너 간에 처리량 공유** | *선택 안 함* |
+    | **처리량 프로비전** | *선택 안 함* |
 
 1. **데이터 탐색기** 창으로 돌아가서 계층 내의 **nothroughputdb** 데이터베이스 노드를 관찰합니다.
 
@@ -140,7 +140,7 @@ ms.locfileid: "138025062"
     | **설정** | **값** |
     | --: | :-- |
     | **데이터베이스 ID** | *manualthroughputdb* |
-    | **컨테이너 간에 처리량 공유** | *이 옵션을 선택합니다.* |
+    | **처리량 프로비전** | *이 옵션을 선택합니다.* |
     | **데이터베이스 처리량** | *수동* |
     | **RU/초** | *400* |
 
@@ -152,11 +152,11 @@ ms.locfileid: "138025062"
 
     | **설정** | **값** |
     | --: | :-- |
-    | **데이터베이스 ID** | *새로 만들기* &vert; *manualthroughputdb* |
-    | **컨테이너 간에 처리량 공유** | *이 옵션을 선택합니다.* |
-    | **데이터베이스 처리량** | *수동* |
-    | **RU/초** | *1000* |
+    | **데이터베이스 ID** | 기존 항목 사용 &vert; *manualthroughputdb* |
     | **컨테이너 ID** | *childcontainer* |
     | **파티션 키** | */primarykey* |
+    | **이 컨테이너의 전용 처리량 프로비전** | *이 옵션을 선택합니다.* |
+    | **컨테이너 처리량** | *수동* |
+    | **RU/초** | *1000* |
 
 1. **데이터 탐색기** 창으로 돌아가서 **manualthroughputdb** 데이터베이스 노드를 확장한 다음, 계층 구조 내에서 **childcontainer** 컨테이너 노드를 관찰합니다.

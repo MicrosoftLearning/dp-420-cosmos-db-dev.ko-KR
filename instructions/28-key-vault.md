@@ -229,7 +229,7 @@ Visual Studio에서 명령 팔레트(**Ctrl+Shift+P**)를 가져오고 Azure 앱
 
 1. App Service 요금제의 기본 이름을 적용하거나(웹앱 이름과 동일해야 함) 새 이름을 선택합니다.
 
-1. **Free (F1) Try out Azure at no cost**(무료(F1) 무료로 Azure 사용해 보기)를 선택합니다.
+1. **무료(F1) 무료로 Azure 사용해 보기 를 선택합니다**.
 
 1. Application Insights에 대해 **지금은 건너뛰기** 를 선택합니다.
 
