@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK를 사용하여 문서 생성 및 업데이트
   module: Module 4 - Implement Azure Cosmos DB SQL API point operations
-ms.openlocfilehash: b4b167618243026dd3b2d9510da1b73555b1c136
-ms.sourcegitcommit: 9e320ed456eaaab98e80324267c710628b557b1c
+ms.openlocfilehash: d952992daabc7dcdfc379620c41659907fa5633f
+ms.sourcegitcommit: 83a535ff82225114232d911bf4654d3b66d40dc4
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139039326"
+ms.lasthandoff: 04/26/2022
+ms.locfileid: "144012126"
 ---
 # <a name="create-and-update-documents-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK를 사용하여 문서 생성 및 업데이트
 
@@ -31,7 +31,7 @@ ms.locfileid: "139039326"
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API 계정 만들기
 
-Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이터베이스 서비스입니다. Azure Cosmos DB 계정을 처음으로 프로비전할 때 계정을 지원할 API(예: **Mongo API** 또는 **SQL API**)를 선택합니다. Azure Cosmos DB SQL API 계정 프로비저닝이 완료되면 엔드포인트 및 키를 검색하고 이를 사용하여 .NET용 Azure SDK 또는 선택한 다른 SDK를 사용하여 Azure Cosmos DB SQL API 계정에 연결할 수 있습니다.
+Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이터베이스 서비스입니다. Azure Cosmos DB 계정을 처음으로 프로비저닝할 때 계정을 지원할 API(예: **Mongo API** 또는 **SQL API**)를 선택합니다. Azure Cosmos DB SQL API 계정 프로비저닝이 완료되면 엔드포인트 및 키를 검색하고 이를 사용하여 .NET용 Azure SDK 또는 선택한 다른 SDK를 사용하여 Azure Cosmos DB SQL API 계정에 연결할 수 있습니다.
 
 1. 새 웹 브라우저 창 또는 탭에서 Azure Portal(``portal.azure.com``)로 이동합니다.
 
@@ -100,7 +100,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
     > &#128221; 예를 들어 키가 **fDR2ci9QgkdkvERTQ==** 인 경우 C# 문은 **문자열 키 = "fDR2ci9QgkdkvERTQ=="** 가 됩니다.
 
-1. 에뮬레이터 내에서 만들려는 새 데이터베이스(**cosmicworks**)의 이름을 전달하고 결과를 **Database** 형식의 변수에 저장하는 **client** 변수의 CreateDatabaseIfNotExistsAsync 메서드를 비동기적으로 호출합니다.
+1. 만들고자 하는 새 데이터베이스(**cosmicworks**)의 이름을 전달하고 결과를 **Database** 형식의 변수에 저장하는 **client** 변수의 CreateDatabaseIfNotExistsAsync 메서드를 비동기적으로 호출합니다.
 
     ```
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
