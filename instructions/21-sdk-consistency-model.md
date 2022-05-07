@@ -2,12 +2,12 @@
 lab:
   title: 포털 및 Azure Cosmos DB SQL API SDK에서 일관성 모델 구성
   module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 280f43ff34be1d12ff9767531d6909743678d53e
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: fd7f7832336a672036462dad6e3850def3b9bc3f
+ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025028"
+ms.lasthandoff: 05/05/2022
+ms.locfileid: "144773606"
 ---
 # <a name="configure-consistency-models-in-the-portal-and-the-azure-cosmos-db-sql-api-sdk"></a>포털 및 Azure Cosmos DB SQL API SDK에서 일관성 모델 구성
 
@@ -76,14 +76,14 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     | **설정** | **값** |
     | --: | :-- |
     | **데이터베이스 ID** | 새 &vert; cosmicworks 만들기  |
-    | **컨테이너 간에 처리량 공유** | 선택 안 함 |
+    | **컨테이너 간에 처리량 공유** | *선택 안 함* |
     | **컨테이너 ID** | *products* |
     | **파티션 키** | */categoryId* |
-    | **컨테이너 처리량** | 수동 &vert; *400*  |
+    | **컨테이너 처리량** | *수동* &vert; *400* |
 
-1. **데이터 탐색기** 창으로 돌아가서 **cosmicworks** 데이터베이스 노드를 확장한 다음, 계층 내의 **products** 컨테이너 노드를 관찰합니다.
+1. **데이터 탐색기** 창으로 돌아가서 **cosmicworks** 데이터베이스 노드를 확장한 다음, 계층 내의 **제품** 컨테이너 노드를 관찰합니다.
 
-1. **데이터 탐색기** 창에서 **cosmicworks** 데이터베이스 노드를 확장하고 **products** 컨테이너 노드를 확장한 다음, **항목** 을 관찰합니다.
+1. **데이터 탐색기** 창에서 **cosmicworks** 데이터베이스 노드를 확장하고 **제품** 컨테이너 노드를 확장한 다음, **항목** 을 관찰합니다.
 
 1. 계속해서 **데이터 탐색기** 창의 명령 모음에서 **새 항목** 을 선택합니다. 편집기에서 자리 표시자 JSON 항목을 다음 콘텐츠로 바꿉니다.
 
@@ -104,7 +104,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
 1. 리소스 블레이드에서 **키** 창으로 이동합니다.
 
-1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히:
+1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히 다음 사항에 주의하세요.
 
     1. **URI** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **엔드포인트** 값을 사용합니다.
 
@@ -200,7 +200,13 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    using CosmosClient client = new CosmosClient(endpoint, key);
+    CosmosClientOptions clientoptions = new CosmosClientOptions()
+    {
+        RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
+    };
+
+    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
     
     Container container = client.GetContainer("cosmicworks", "products");
     
@@ -269,7 +275,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    using CosmosClient client = new CosmosClient(endpoint, key);
+    CosmosClient client = new CosmosClient(endpoint, key);
     
     Container container = client.GetContainer("cosmicworks", "products");
     

@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK를 사용하여 쿼리 실행
   module: Module 5 - Execute queries in Azure Cosmos DB SQL API
-ms.openlocfilehash: 661cb651fa34f41673ca67bd47f6b2319f2aee91
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: cc0f5c470747dca5ea494b29eeb1b2397223ffd8
+ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025022"
+ms.lasthandoff: 05/05/2022
+ms.locfileid: "144773636"
 ---
 # <a name="execute-a-query-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK를 사용하여 쿼리 실행
 
@@ -56,7 +56,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
 1. 새로 만든 **Azure Cosmos DB** 계정 리소스로 이동하여 **키** 창으로 이동합니다.
 
-1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히:
+1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히 다음 사항에 주의하세요.
 
     1. **URI** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **엔드포인트** 값을 사용합니다.
 
@@ -70,20 +70,20 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
 1. **Visual Studio Code** 에서 **터미널** 메뉴를 연 다음, **새 터미널** 을 선택하여 새 터미널 인스턴스를 엽니다.
 
-1. 머신에서 전역으로 사용할 수 있는 [cosmicworks][nuget.org/packages/cosmicworks] 명령줄 도구를 설치합니다.
+1. 컴퓨터에서 전역으로 사용할 수 있는 [cosmicworks][nuget.org/packages/cosmicworks] 명령줄 도구를 설치합니다.
 
     ```
     dotnet tool install --global cosmicworks
     ```
 
-    > &#128161; 이 명령을 완료하는 데 몇 분 정도 걸릴 수 있습니다. 이 명령은 과거에 이 도구의 최신 버전을 이미 설치한 경우 경고 메시지(*’cosmicworks’ 도구는 이미 설치되어 있습니다')를 출력합니다.
+    > &#128161; 이 명령을 완료하는 데 몇 분 정도 걸릴 수 있습니다. 이 도구의 최신 버전이 이미 설치된 경우 경고 메시지(*'cosmicworks' 도구는 이미 설치되어 있습니다')가 출력됩니다.
 
 1. cosmicworks를 실행하여 다음 명령줄 옵션을 사용하여 Azure Cosmos DB 계정을 시드합니다.
 
     | **옵션** | **값** |
     | ---: | :--- |
-    | **--endpoint** | 이 랩에서 이전에 복사한 엔드포인트 값 |
-    | **--key** | 이 랩에서 이전에 복사한 키 값 |
+    | **--endpoint** | *이 랩에서 이전에 복사한 엔드포인트 값* |
+    | **--key** | *이 랩에서 이전에 복사한 키 값* |
     | **--datasets** | *product* |
 
     ```
@@ -160,7 +160,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);
+    CosmosClient client = new CosmosClient(endpoint, key);
 
     CosmosDatabase database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 

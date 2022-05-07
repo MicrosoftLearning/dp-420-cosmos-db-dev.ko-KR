@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK를 사용하여 교차곱 쿼리 결과에 페이지를 매김
   module: Module 5 - Execute queries in Azure Cosmos DB SQL API
-ms.openlocfilehash: f03064bd16ad52920c6a25dfaee2b985bffdb570
-ms.sourcegitcommit: 83a535ff82225114232d911bf4654d3b66d40dc4
+ms.openlocfilehash: 77429a01ed632556a95096f830ef3c4f640e3588
+ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 04/26/2022
-ms.locfileid: "144012123"
+ms.lasthandoff: 05/05/2022
+ms.locfileid: "144773624"
 ---
 # <a name="paginate-cross-product-query-results-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK를 사용하여 교차곱 쿼리 결과에 페이지를 매김
 
@@ -204,13 +204,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new CosmosClient(endpoint, key);
 
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 

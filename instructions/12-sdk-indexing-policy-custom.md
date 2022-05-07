@@ -2,12 +2,12 @@
 lab:
   title: 포털에서 Azure Cosmos DB SQL API 컨테이너의 인덱스 정책 구성
   module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 1d14cf0d3c98832cb46c06178845b56b9748b0d3
-ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
+ms.openlocfilehash: 8e111a060e68c32dfb03a2b2b239131298dd0919
+ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139057392"
+ms.lasthandoff: 05/05/2022
+ms.locfileid: "144773639"
 ---
 # <a name="configure-an-azure-cosmos-db-sql-api-containers-index-policy-using-the-sdk"></a>SDK를 사용하여 Azure Cosmos DB SQL API 컨테이너의 인덱스 정책 구성
 
@@ -148,13 +148,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new CosmosClient(endpoint, key);
 
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
