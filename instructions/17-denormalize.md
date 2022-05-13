@@ -2,18 +2,78 @@
 lab:
   title: 참조 무결성을 위해 데이터 및 집계를 비정규화하고 변경 피드를 사용하는 비용
   module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 3abaf4dc55eb06b32eb3b3c94b2db9441d2d1868
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: dab2ec1b5ba4eb1fd317a039aa6db346cfae0d3d
+ms.sourcegitcommit: e2c44650d91ce5b92b82d1357b43c254c0691471
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025146"
+ms.lasthandoff: 04/13/2022
+ms.locfileid: "141674648"
 ---
 # <a name="cost-of-denormalizing-data-and-aggregates-and-using-the-change-feed-for-referential-integrity"></a>참조 무결성을 위해 데이터 및 집계를 비정규화하고 변경 피드를 사용하는 비용
 
 관계형 모델을 사용하면 다른 엔터티를 각자의 컨테이너에 배치할 수 있습니다.  그러나 NoSQL 데이터베이스에는 컨테이너 간에 조인이 없으므로 조인 사용을 제거하기 위해 데이터 비정규화를 시작해야 합니다.  또한 NoSQL은 데이터를 모델링함으로써 요청 수를 줄여 애플리케이션이 가능한 한 적은 수의 요청으로 데이터를 가져올 수 있도록 합니다. 데이터를 비정규화할 때 발생하는 한 가지 문제는 엔터티 간의 참조 무결성일 수 있습니다. 이를 위해 데이터의 동기화 상태를 유지하도록 변경 피드를 사용할 수 있습니다. 개수별로 그룹화와 같은 집계를 비정규화하면 요청 수를 줄이는 데도 도움이 될 수 있습니다.  
 
-이 랩에서는 데이터 및 집계를 비정규화하는 것이 비용을 절감하는 데 도움이 되는 이점과 변경 피드를 사용하여 비정규화된 데이터에 대한 참조 무결성을 유지하는 방법의 이점을 살펴봅니다.
+이 랩에서는 데이터 및 집계를 비정규화하는 것이 비용을 절감하는 데 도움이 되는 이점과 변경 피드를 사용하여 비정규화된 데이터에 대한 참조 무결성을 유지 관리하는 방법의 이점을 살펴봅니다.
+
+## <a name="prepare-your-azure-cosmos-db-database-environment"></a>Azure Cosmos DB 데이터베이스 환경 준비
+
+이 랩에서 작업 중인 Azure Cosmos DB 데이터베이스를 아직 준비하지 않은 경우 다음 단계를 수행하여 준비합니다. 그렇지 않으면 **데이터를 비정규화할 때 성능 비용 측정** 섹션으로 이동합니다.
+
+1. 새 웹 브라우저 창 또는 탭에서 Azure Portal(``portal.azure.com``)로 이동합니다.
+
+1. 제공한 Azure 자격 증명을 사용하여 로그인합니다.
+
+1. 이 랩에서는 Azure Cloud Shell 터미널을 사용하여 샘플 데이터를 로드하지만, 이 작업을 하려면 먼저 Azure Cloud Shell에서 추가된 Azure Storage 계정이 작동해야 합니다. 기존에 사용 가능한 스토리지 계정이 없는 경우 계정을 만들어야 합니다.  Azure Cloud Shell에 대한 액세스 권한이 이미 있는 경우 이 단계를 건너뛸 수 있습니다.
+
+    1. **리소스 만들기** 옵션을 선택하여 리소스를 만듭니다.
+
+    1. **스토리지 계정** 을 검색합니다.
+
+    1. 목록에서 **스토리지 계정** 을 선택하고 **만들기** 를 선택합니다.
+
+    1. 아직 선택하지 않은 경우 올바른 구독 및 리소스 그룹을 선택합니다. 
+
+    1. 소문자와 숫자를 사용하여 스토리지 계정 이름으로 고유한 이름을 선택합니다.  리소스 그룹 이름이 충분히 고유한 경우 스토리지 계정 이름으로도 사용할 수 있습니다.  다른 모든 옵션을 기본값으로 유지합니다.
+
+        > &#128221; 이 스토리지 계정을 만드는 지역을 기록해 둡니다. 아래에서 처음으로 Azure Cloud Shell을 설정하는 경우 동일한 지역을 선택해야 합니다.
+
+   1. **검토 + 만들기** 를 선택하고 유효성 검사가 통과되면 **만들기** 를 선택합니다.
+
+1. Azure Cloud Shell이 이미 설정되었으면 **Bash** 모드에서 열고, 그렇지 않으면 다음 지침을 사용하여 처음으로 설정합니다.
+
+    ![Azure Cloud Shell 옵션을 보여 주는 스크린샷](media/17-open-azure-cloud-shell.png)
+
+    1. **Azure Cloud Shell** 단추를 선택하여 엽니다.
+
+    1. **Bash** 모드를 선택합니다.
+
+        ![Azure Cloud Shell Bash/PS 옵션을 보여 주는 스크린샷](media/17-open-azure-cloud-shell-bash.png)
+ 
+    1. 이 Azure 계정으로 Azure Cloud Shell을 처음 실행하는 경우 Azure Storage 계정을 이 Cloud Shell에 연결해야 합니다.  **고급 설정 표시** 를 선택하여 스토리지 계정을 연결합니다. 
+
+        ![Cloud Shell 고급 설정을 보여 주는 스크린샷](media/17-azure-cloud-shell-choose-storage-account.png)
+ 
+    1. 올바른 구독 및 지역을 선택합니다.  **리소스 그룹** 및 **스토리지 계정** 에서 **기존 항목 사용** 을 선택하고 올바른 리소스 그룹과 스토리지 계정을 선택합니다.  **파일 공유** 에서 해당 스토리지 계정으로 공유에 고유한 이름을 지정합니다. **스토리지 만들기** 를 선택하여 Cloud Shell 설정을 완료합니다.
+
+        ![Cloud Shell 고급 설정을 보여 주는 스크린샷](media/17-azure-cloud-shell-choose-storage-account-details.png)
+ 
+ 1. **Azure Cloud Shell Bash 터미널** 에서 다음 명령을 실행합니다. 이 명령은 새 Azure Cosmos DB 계정을 만드는 스크립트를 실행한 다음, 데이터베이스를 채우고 연습을 완료하는 데 사용하는 앱을 빌드하고 시작합니다. 빌드를 완료하는 데 15~20분이 걸릴 수 있으므로 커피나 차를 마시며 기다리는 것이 좋을 것 같습니다.
+
+    ```
+    git clone https://github.com/microsoftlearning/dp-420-cosmos-db-dev
+    cd dp-420-cosmos-db-dev/17-denormalize
+    bash init.sh
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet build
+    dotnet run --load-data
+
+    ```
+
+1. Cloud Shell 터미널을 닫습니다. **Azure Portal을 닫지 마세요**.
+
+1. Azure Portal에서 위의 단계에서 만든 새 Azure Cosmos DB 계정으로 이동합니다.
+
+1. **_Keys_* _ 섹션 아래 **URI** 및 **기본 키** 를 기록합니다.  _appSettings.json* 파일을 아래 해당 값으로 업데이트합니다.
 
 ## <a name="prepare-your-development-environment"></a>개발 환경 준비
 
@@ -29,27 +89,11 @@ ms.locfileid: "138025146"
 
 1. 리포지토리가 복제되면 **Visual Studio Code** 에서 선택한 로컬 폴더를 엽니다.
 
-1. **Visual Studio Code** 의 **탐색기** 창에서 **17-denormalize** 폴더를 찾아봅니다.
+1. **Visual Studio Code** 에서 *17-denormalize* 폴더에 있는 *appSettings.json* 파일을 엽니다.
 
-1. **17-denormalize** 폴더의 상황에 맞는 메뉴를 연 다음, **통합 터미널에서 열기** 를 선택하여 새 터미널 인스턴스를 엽니다.
+1. *CosmosDBAccountURI* 및 *CosmosDBAccountKey* 를 이전에 기록한 해당 값으로 바꿉니다.
 
-1. 터미널이 **Windows Powershell** 터미널로 열리면 새 **Git Bash** 터미널을 엽니다.
-
-    > &#128161; **Git Bash** 터미널을 열려면 터미널 메뉴의 오른쪽에서 **+** 기호 옆에 있는 풀다운을 클릭하고 *Git Bash* 를 선택합니다.
-
-1. **Git Bash 터미널** 에서 다음 명령을 실행합니다. 명령은 제공된 랩 자격 증명을 사용하는 Azure Portal에 연결하기 위해 브라우저 창을 열고 새 Azure Cosmos DB 계정을 만드는 스크립트를 실행한 다음, 데이터베이스를 채우고 연습을 완료하는 데 사용하는 앱을 빌드하고 시작합니다. 일단 스크립트가 Azure 계정에 대해 제공된 자격 증명을 요청하면 빌드를 완료하는 데 15~20분이 걸릴 수 있으므로 커피나 차를 마시며 기다리는 것이 좋을 것 같습니다.
-
-    ```
-    az login
-    cd 17-denormalize
-    bash init.sh
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
-    dotnet build
-    dotnet run --load-data
-
-    ```
-
-1. 통합 터미널을 닫습니다.
+1. Ctrl+S를 선택하여 변경 내용을 저장합니다.
 
 ## <a name="exercise-1-measure-performance-cost-when-denormalizing-data"></a>연습 1: 데이터를 비정규화할 때 성능 비용 측정
 
@@ -57,16 +101,22 @@ ms.locfileid: "138025146"
 
 데이터가 개별 컨테이너에 저장되는 **database-v2** 컨테이너에서 쿼리를 실행하여 제품 범주 이름을 가져옵니다. 그런 다음 해당 쿼리에 대한 요청 요금을 확인합니다.
 
-1. 새 웹 브라우저 창 또는 탭에서 Azure Portal(``portal.azure.com``)로 이동합니다.
+1. 아직 열리지 않은 경우 새 웹 브라우저 창 또는 탭에서 Azure Portal(``portal.azure.com``)로 이동합니다.
 
 1. 구독과 연결된 Microsoft 자격 증명을 사용하여 포털에 로그인합니다.
 
 1. 왼쪽 창에서 **Azure Cosmos DB** 를 선택합니다.
+
 1. **cosmicworks** 로 시작하는 이름의 Azure Cosmos DB 계정을 선택합니다.
+
 1. 왼쪽 창에서 **데이터 탐색기** 를 선택합니다.
+
 1. **database-v2** 를 확장합니다.
+
 1. **productCategory** 컨테이너를 선택합니다.
+
 1. 페이지 맨 위에서 **새 SQL 쿼리** 를 선택합니다.
+
 1. **쿼리 1** 창에서 다음 SQL 코드를 붙여 넣은 다음, **쿼리 실행** 을 선택합니다.
 
     ```
@@ -86,7 +136,9 @@ ms.locfileid: "138025146"
 이제 제품 컨테이너를 쿼리하여 “Components, Headsets” 범주에 대한 모든 제품을 가져옵니다.
 
 1. **product** 컨테이너를 선택합니다.
+
 1. 페이지 맨 위에서 **새 SQL 쿼리** 를 선택합니다.
+
 1. **쿼리 2** 창에서 다음 SQL 코드를 붙여 넣은 다음, **쿼리 실행** 을 선택합니다.
 
     ```
@@ -108,7 +160,9 @@ ms.locfileid: "138025146"
 먼저, HL Headset에 대한 태그를 반환하는 쿼리를 실행합니다.
 
 1. **productTag** 컨테이너를 선택합니다.
+
 1. 페이지 맨 위에서 **새 SQL 쿼리** 를 선택합니다.
+
 1. **쿼리 3** 창에서 다음 SQL 코드를 붙여 넣은 다음, **쿼리 실행** 을 선택합니다.
 
     ```
@@ -126,7 +180,9 @@ ms.locfileid: "138025146"
 그런 다음, LL Headset에 대한 태그를 반환하는 쿼리를 실행합니다.
 
 1. **productTag** 컨테이너를 선택합니다.
+
 1. 페이지 맨 위에서 **새 SQL 쿼리** 를 선택합니다.
+
 1. **쿼리 4** 창에서 다음 SQL 코드를 붙여 넣은 다음, **쿼리 실행** 을 선택합니다.
 
     ```
@@ -144,7 +200,9 @@ ms.locfileid: "138025146"
 마지막으로, ML Headset에 대한 태그를 반환하는 쿼리를 실행합니다.
 
 1. **productTag** 컨테이너를 선택합니다.
+
 1. 페이지 맨 위에서 **새 SQL 쿼리** 를 선택합니다.
+
 1. **쿼리 5** 창에서 다음 SQL 코드를 붙여 넣은 다음, **쿼리 실행** 을 선택합니다.
 
     ```
@@ -176,8 +234,11 @@ ms.locfileid: "138025146"
 이제 비정규화된 데이터베이스에서 동일한 정보를 쿼리합니다.
 
 1. Data Explorer에서 **database-v3** 을 선택합니다.
+
 1. **product** 컨테이너를 선택합니다.
+
 1. 페이지 맨 위에서 **새 SQL 쿼리** 를 선택합니다.
+
 1. **쿼리 6** 창에서 다음 SQL 코드를 붙여 넣은 다음, **쿼리 실행** 을 선택합니다.
 
     ```
@@ -217,7 +278,7 @@ NoSQL 모델에서 동일한 정보를 얻기 위해, 요청 요금이 2.9RU인 
 - 새 범주 이름으로 새 제품 컨테이너를 쿼리하고, 제품 수를 계산하여 모두 업데이트되었는지 확인합니다.
 - 이름을 다시 원래대로 변경하고, 변경 피드가 변경 내용을 다시 전파하는 것을 관찰합니다.
 
-### <a name="start-azure-cloud-shell-and-open-visual-studio-code"></a>Azure Cloud Shell을 시작하고 Visual Studio Code를 엽니다
+### <a name="open-visual-studio-code"></a>Visual Studio Code를 엽니다.
 
 변경 피드에 대해 업데이트할 코드로 이동하려면, 다음을 수행합니다.
 
@@ -301,6 +362,7 @@ NoSQL 모델에서 동일한 정보를 얻기 위해, 요청 요금이 2.9RU인 
 1. 프로젝트를 컴파일하고 실행하려면 다음 명령을 실행합니다.
 
     ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
     dotnet build
     dotnet run
     ```
@@ -333,7 +395,7 @@ NoSQL 모델에서 동일한 정보를 얻기 위해, 요청 요금이 2.9RU인 
 
 1. 너무 멀리 간 경우, 주 메뉴로 돌아가서 다시 **b** 를 선택하여 변경 내용을 관찰합니다.
 
-1. 완료되면 **x** 를 입력하여 종료하고 Cloud Shell로 돌아갑니다.
+1. 완료되면 **x** 를 입력하여 종료하고 Shell로 돌아갑니다.
 
 ---
 
@@ -351,7 +413,7 @@ NoSQL 모델에서 동일한 정보를 얻기 위해, 요청 요금이 2.9RU인 
 - 상위 10대 고객 쿼리를 실행하여 현재 결과를 확인합니다.
 - 고객이 주문을 취소하는 경우에 트랜잭션 일괄 처리를 사용하는 방법을 보여줍니다.
 
-## <a name="start-azure-cloud-shell-and-open-visual-studio-code"></a>Azure Cloud Shell을 시작하고 Visual Studio Code를 엽니다
+## <a name="open-visual-studio-code"></a>Visual Studio Code를 엽니다.
 
 이 단원에서 사용할 코드를 가져오려면, 다음을 수행합니다.
 
@@ -453,8 +515,11 @@ NoSQL 모델에서 동일한 정보를 얻기 위해, 요청 요금이 2.9RU인 
 동일한 고객에 대해 새 판매 주문을 생성하고 고객 레코드에 저장된 총 판매 주문을 업데이트합니다.
 
 1. 창에서 아무 키나 눌러 주 메뉴로 돌아갑니다.
+
 1. **d** 를 선택하여 **새 주문 생성 및 주문 합계 업데이트** 메뉴 항목을 실행합니다.
+
 1. 아무 키나 눌러 주 메뉴로 돌아갑니다.
+
 1. **c** 를 선택하여 동일한 쿼리를 다시 실행합니다.
 
    새 판매 주문에는 **HL Mountain Frame - Black, 38** 과 **Racing Socks, M** 이 표시됩니다.
@@ -476,6 +541,7 @@ NoSQL 모델에서 동일한 정보를 얻기 위해, 요청 요금이 2.9RU인 
 1. **f** 를 선택하여 **삭제 순서 및 업데이트 주문 합계** 메뉴 항목을 실행합니다.
 
 1. 아무 키나 눌러 주 메뉴로 돌아갑니다.
+
 1. **c** 를 선택하여 동일한 쿼리를 다시 실행하고 고객 레코드가 업데이트되었는지 확인합니다.
 
    새 주문이 더 이상 반환되지 않습니다. 위로 스크롤하면 `salesOrderCount` 값이 `2`로 반환된 것을 볼 수 있습니다.
@@ -487,6 +553,7 @@ NoSQL 모델에서 동일한 정보를 얻기 위해, 요청 요금이 2.9RU인 
 판매 주문을 생성하는 것과 정확히 동일한 방법으로 판매 주문을 삭제합니다. 두 작업은 모두 트랜잭션에서 래핑되고 동일한 논리 파티션에서 실행됩니다. 이를 수행하는 코드를 살펴보겠습니다.
 
 1. **x** 를 입력하여 애플리케이션을 종료합니다.
+
 1. 아직 열리지 않은 경우 Visual Studio Code를 열고 *17-denormalize* 폴더에서 *Program.cs* 파일을 엽니다.
 
 1. Ctrl + G를 선택한 다음, **529** 를 입력합니다.
