@@ -2,12 +2,12 @@
 lab:
   title: Azure Resource Manager 템플릿을 사용하여 Azure Cosmos DB SQL API 컨테이너 만들기
   module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: 55e5430aac14807552378acfc01791818da5f267
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: caae313721f68a3a41013c5bdcb586b2003f8151
+ms.sourcegitcommit: f6f2445d6c243e6381e5e6380c2147b0db4b922e
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025018"
+ms.lasthandoff: 05/12/2022
+ms.locfileid: "144971464"
 ---
 # <a name="create-an-azure-cosmos-db-sql-api-container-using-azure-resource-manager-templates"></a>Azure Resource Manager 템플릿을 사용하여 Azure Cosmos DB SQL API 컨테이너 만들기
 
@@ -86,6 +86,37 @@ Azure Resource Manager의 **Microsoft.DocumentDB** 리소스 공급자를 사용
 
     > &#128221; 이 명령은 시작 디렉터리가 이미 **31-create-container-arm-template** 폴더로 설정된 터미널을 엽니다.
 
+1. 다음 명령을 사용하여 Azure CLI의 대화형 로그인 절차를 시작합니다.
+
+    ```
+    az login
+    ```
+
+1. Azure CLI는 웹 브라우저 창 또는 탭을 자동으로 엽니다. 브라우저 인스턴스 내에서 구독과 연결된 Microsoft 자격 증명을 사용하여 Azure CLI에 로그인합니다.
+
+1. 웹 브라우저 창 또는 탭을 닫습니다.
+
+1. 랩 공급자가 사용자를 위해 리소스 그룹을 만들었는지 확인합니다. 그렇다면 다음 섹션에서 필요하므로 이름을 기록합니다.
+
+    ```
+    az group list --query "[].{ResourceGroupName:name}" -o table
+    ```
+    
+    이 명령은 여러 리소스 그룹 이름을 반환할 수 있습니다.
+
+1. (선택 사항) **사용자를 위해 리소스 그룹을 만들지 않은 경우** 리소스 그룹 이름을 선택하고 만듭니다. 일부 랩 환경이 잠겨 있는 경우 관리자가 사용자를 위해 리소스 그룹을 만들어야 한다는 사실에 유의하세요.
+
+    i. 이 목록에서 위치 이름 클로셋을 가져옵니다.
+
+    ```
+    az account list-locations --query "sort_by([].{YOURLOCATION:name, DisplayName:regionalDisplayName}, &YOURLOCATION)" --output table
+    ```
+
+    ii. 리소스 그룹을 만듭니다.  일부 랩 환경이 잠겨 있는 경우 관리자가 사용자를 위해 리소스 그룹을 만들어야 한다는 사실에 유의하세요.
+    ```
+    az group create --name YOURRESOURCEGROUPNAME --location YOURLOCATION
+    ```
+
 1. 다음 명령을 사용하여 이 랩의 앞부분에서 만들거나 본 리소스 그룹의 이름으로 새 변수 이름인 **resourceGroup** 을 만듭니다.
 
     ```
@@ -99,14 +130,6 @@ Azure Resource Manager의 **Microsoft.DocumentDB** 리소스 공급자를 사용
     ```
     echo $resourceGroup
     ```
-
-1. 다음 명령을 사용하여 Azure CLI의 대화형 로그인 절차를 시작합니다.
-
-    ```
-    az login
-    ```
-
-1. Azure CLI는 웹 브라우저 창 또는 탭을 자동으로 엽니다. 브라우저 인스턴스 내에서 구독과 연결된 Microsoft 자격 증명을 사용하여 Azure CLI에 로그인합니다.
 
 1. [az deployment group create][docs.microsoft.com/cli/azure/deployment/group] 명령을 사용하여 Azure Resource Manager 템플릿을 배포합니다.
 

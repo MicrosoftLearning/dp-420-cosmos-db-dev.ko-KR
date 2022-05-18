@@ -2,12 +2,12 @@
 lab:
   title: 프로비저닝된 처리량을 Azure CLI 스크립트를 사용하여 조정
   module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: f6eaf4f0e07037010cec92f3db348a4806304d94
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 1e74a087f3357315725bfab778bd38ded9a6ca9d
+ms.sourcegitcommit: f6f2445d6c243e6381e5e6380c2147b0db4b922e
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025107"
+ms.lasthandoff: 05/12/2022
+ms.locfileid: "144971461"
 ---
 # <a name="adjust-provisioned-throughput-using-an-azure-cli-script"></a>프로비저닝된 처리량을 Azure CLI 스크립트를 사용하여 조정
 
@@ -44,6 +44,27 @@ Azure CLI를 사용하기 전에 먼저 CLI 버전을 확인하고 Azure 자격 
 1. Azure CLI는 웹 브라우저 창 또는 탭을 자동으로 엽니다. 브라우저 인스턴스 내에서 구독과 연결된 Microsoft 자격 증명을 사용하여 Azure CLI에 로그인합니다.
 
 1. 웹 브라우저 창 또는 탭을 닫습니다.
+
+1. 랩 공급자가 사용자를 위해 리소스 그룹을 만들었는지 확인합니다. 그렇다면 다음 섹션에서 필요하므로 이름을 기록합니다.
+
+    ```
+    az group list --query "[].{ResourceGroupName:name}" -o table
+    ```
+    
+    이 명령은 여러 리소스 그룹 이름을 반환할 수 있습니다.
+
+1. (선택 사항) **사용자를 위해 리소스 그룹을 만들지 않은 경우** 리소스 그룹 이름을 선택하고 만듭니다. 일부 랩 환경이 잠겨 있는 경우 관리자가 사용자를 위해 리소스 그룹을 만들어야 한다는 사실에 유의하세요.
+
+    i. 이 목록에서 위치 이름 클로셋을 가져옵니다.
+
+    ```
+    az account list-locations --query "sort_by([].{YOURLOCATION:name, DisplayName:regionalDisplayName}, &YOURLOCATION)" --output table
+    ```
+
+    ii. 리소스 그룹을 만듭니다.  일부 랩 환경이 잠겨 있는 경우 관리자가 사용자를 위해 리소스 그룹을 만들어야 한다는 사실에 유의하세요.
+    ```
+    az group create --name YOURRESOURCEGROUPNAME --location YOURLOCATION
+    ```
 
 ## <a name="create-azure-cosmos-db-account-using-the-azure-cli"></a>Azure CLI를 사용하여 Azure Cosmos DB 계정 만들기
 

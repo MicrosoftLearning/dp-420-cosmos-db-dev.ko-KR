@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK를 사용하여 교차곱 쿼리 결과에 페이지를 매김
   module: Module 5 - Execute queries in Azure Cosmos DB SQL API
-ms.openlocfilehash: 77429a01ed632556a95096f830ef3c4f640e3588
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
+ms.openlocfilehash: 0a353068db4047cb710b6937a89c5f3ccb652aed
+ms.sourcegitcommit: 63494c7409f08210c57aab19f2a61dd35851fd3b
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773624"
+ms.lasthandoff: 05/11/2022
+ms.locfileid: "144940129"
 ---
 # <a name="paginate-cross-product-query-results-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK를 사용하여 교차곱 쿼리 결과에 페이지를 매김
 
@@ -122,7 +122,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
     > &#128221; 예를 들어 키가 **fDR2ci9QgkdkvERTQ==** 인 경우 C# 문은 **문자열 키 = "fDR2ci9QgkdkvERTQ=="** 가 됩니다.
 
-1. 값이 **SELECT p.name, t.name AS tag FROM products p JOIN t IN p.tags** 인 *string* 형식의 **sql** 이라는 새 변수를 만듭니다.
+1. **SELECT p.id, p.name, p.price FROM products p** 값으로 문자열 형식의 **sql** 이라는 새 변수를 만듭니다.
 
     ```
     string sql = "SELECT p.id, p.name, p.price FROM products p ";
