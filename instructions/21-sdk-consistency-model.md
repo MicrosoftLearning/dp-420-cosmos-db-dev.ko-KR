@@ -2,12 +2,12 @@
 lab:
   title: 포털 및 Azure Cosmos DB SQL API SDK에서 일관성 모델 구성
   module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: fd7f7832336a672036462dad6e3850def3b9bc3f
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
+ms.openlocfilehash: 5b6fc9dd51677f854b341bb32838e65cdb8d79de
+ms.sourcegitcommit: 403c2ecd84a8d6cb1672752734a0844749d6cba5
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773606"
+ms.lasthandoff: 06/01/2022
+ms.locfileid: "145987799"
 ---
 # <a name="configure-consistency-models-in-the-portal-and-the-azure-cosmos-db-sql-api-sdk"></a>포털 및 Azure Cosmos DB SQL API SDK에서 일관성 모델 구성
 
@@ -200,13 +200,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new CosmosClient(endpoint, key);
     
     Container container = client.GetContainer("cosmicworks", "products");
     
