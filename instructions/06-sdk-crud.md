@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK를 사용하여 문서 생성 및 업데이트
   module: Module 4 - Implement Azure Cosmos DB SQL API point operations
-ms.openlocfilehash: 58df0a4128df02d7e5b7254e3fdc60695a476737
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
+ms.openlocfilehash: 4e50de8a4368336f952a8f966ff26340f86fa170
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773630"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919965"
 ---
 # <a name="create-and-update-documents-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK를 사용하여 문서 생성 및 업데이트
 
@@ -71,6 +71,12 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 1. **06-sdk-crud** 폴더의 상황에 맞는 메뉴를 연 다음, **통합 터미널에서 열기** 를 선택하여 새 터미널 인스턴스를 엽니다.
 
     > &#128221; 이 명령은 시작 디렉터리가 **06-sdk-crud** 폴더로 이미 설정된 터미널을 엽니다.
+
+1. 다음 명령을 사용하여 NuGet에서 [ Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 패키지를 추가합니다.
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
 
 1. [dotnet build][docs.microsoft.com/dotnet/core/tools/dotnet-build] 명령을 사용하여 프로젝트를 빌드합니다.
 
@@ -168,11 +174,11 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
     | 속성 | 값 |
     | ---: | :--- |
-    | **id** | ``706cd7c6-db8b-41f9-aea2-0e0c7e8eb009`` |
-    | **categoryId** | ``9603ca6c-9e28-4a02-9194-51cdb7fea816`` |
-    | **name** | ``Road Saddle`` |
-    | **price** | ``45.99d`` |
-    | **태그** | ``{ tan, new, crisp }`` |
+    | **id** | *706cd7c6-db8b-41f9-aea2-0e0c7e8eb009* |
+    | **categoryId** | *9603ca6c-9e28-4a02-9194-51cdb7fea816* |
+    | **name** | *Road Saddle* |
+    | **price** | *45.99d* |
+    | **태그** | *{ tan, new, crisp }* |
 
     ```
     Product saddle = new()
@@ -349,8 +355,8 @@ SDK를 학습하는 동안 온라인 Azure Cosmos DB SDK 계정 또는 에뮬레
 
     | **속성** | **값** |
     | ---: | :--- |
-    | **이름** | Road Saddle |
-    | **가격** | $45.99 |
+    | **이름** | *Road Saddle* |
+    | **가격** | *$45.99* |
 
     > &#128221; 이 때는 항목을 만들었기 때문에 이 값이 변경되지 않았을 것입니다. 이 연습에서는 이러한 값을 변경합니다.
 
@@ -436,8 +442,8 @@ SDK를 학습하는 동안 온라인 Azure Cosmos DB SDK 계정 또는 에뮬레
 
     | **속성** | **값** |
     | ---: | :--- |
-    | **이름** | Road LL Saddle |
-    | **가격** | $32.55 |
+    | **이름** | *Road LL Saddle* |
+    | **가격** | *$32.55* |
 
     > &#128221; 이 때는 항목을 관찰했기 때문에 이 값을 변경해야 합니다.
 

@@ -2,12 +2,12 @@
 lab:
   title: Azure Portal을 사용하여 Azure Cosmos DB SQL API에 대한 처리량 구성
   module: Module 2 - Plan and implement Azure Cosmos DB SQL API
-ms.openlocfilehash: 021e34b83692f0e8930362cb54749f81b8ffe945
-ms.sourcegitcommit: 3dcd91627a28a2718744929be8f23b427f701793
+ms.openlocfilehash: 08dca99514789805471e0068fb19d5c9e331f80d
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 03/08/2022
-ms.locfileid: "139616131"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919959"
 ---
 # <a name="configure-throughput-for-azure-cosmos-db-sql-api-with-the-azure-portal"></a>Azure Portal을 사용하여 Azure Cosmos DB SQL API에 대한 처리량 구성
 
@@ -57,7 +57,7 @@ ms.locfileid: "139616131"
 
     | **설정** | **값** |
     | --: | :-- |
-    | **데이터베이스 ID** | *cosmicworks* |
+    | **데이터베이스 ID** | *`cosmicworks`* |
 
 1. **데이터 탐색기** 창으로 돌아가서 계층 내의 **cosmicworks** 데이터베이스 노드를 관찰합니다.
 
@@ -68,8 +68,8 @@ ms.locfileid: "139616131"
     | **설정** | **값** |
     | --: | :-- |
     | **데이터베이스 ID** | *기존 항목 사용* &vert; *cosmicworks* |
-    | **컨테이너 ID** | *products* |
-    | **파티션 키** | */categoryId* |
+    | **컨테이너 ID** | *`products`* |
+    | **파티션 키** | *`/categoryId`* |
 
 1. **데이터 탐색기** 창으로 돌아가서 **cosmicworks** 데이터베이스 노드를 확장한 다음, 계층 내의 **제품** 컨테이너 노드를 관찰합니다.
 
@@ -97,6 +97,7 @@ ms.locfileid: "139616131"
     | **위치** | *데이터베이스를 처음 호스트할 지역을 선택합니다. 사용 가능한 지역을 선택합니다.* |
     | **용량 모드** | *프로비전된 처리량을 선택합니다.* |
     | **무료 계층 할인 적용** | *적용 안 함* |
+    | **이 계정에서 프로비전할 수 있는 총 처리량 제한** | *선택 취소* |
 
 1. **검토 + 만들기** 를 선택하여 **검토 + 만들기** 탭으로 이동한 다음, **만들기** 를 선택합니다.
 
@@ -114,7 +115,7 @@ ms.locfileid: "139616131"
 
     | **설정** | **값** |
     | --: | :-- |
-    | **데이터베이스 ID** | *nothroughputdb* |
+    | **데이터베이스 ID** | *`nothroughputdb`* |
     | **처리량 프로비전** | *선택 안 함* |
 
 1. **데이터 탐색기** 창으로 돌아가서 계층 내의 **nothroughputdb** 데이터베이스 노드를 관찰합니다.
@@ -126,10 +127,10 @@ ms.locfileid: "139616131"
     | **설정** | **값** |
     | --: | :-- |
     | **데이터베이스 ID** | *기존 항목 사용* &vert; *nothroughputdb* |
-    | **컨테이너 ID** | *requiredthroughputcontainer* |
-    | **파티션 키** | */primarykey* |
+    | **컨테이너 ID** | *`requiredthroughputcontainer`* |
+    | **파티션 키** | *`/primarykey`* |
     | **컨테이너 처리량** | *수동* |
-    | **RU/초** | *400* |
+    | **RU/초** | *`400`* |
 
 1. **데이터 탐색기** 창으로 돌아가서 **nothroughputdb** 데이터베이스 노드를 확장한 다음, 계층 구조 내에서 **requiredthroughputcontainer** 컨테이너 노드를 관찰합니다.
 
@@ -139,10 +140,10 @@ ms.locfileid: "139616131"
 
     | **설정** | **값** |
     | --: | :-- |
-    | **데이터베이스 ID** | *manualthroughputdb* |
+    | **데이터베이스 ID** | *`manualthroughputdb`* |
     | **처리량 프로비전** | *이 옵션 선택.* |
     | **데이터베이스 처리량** | *수동* |
-    | **RU/초** | *400* |
+    | **RU/초** | *`400`* |
 
 1. **데이터 탐색기** 창으로 돌아가서 계층 내의 **manualthroughputdb** 데이터베이스 노드를 관찰합니다.
 
@@ -153,10 +154,10 @@ ms.locfileid: "139616131"
     | **설정** | **값** |
     | --: | :-- |
     | **데이터베이스 ID** | 기존 항목 사용 &vert; *manualthroughputdb* |
-    | **컨테이너 ID** | *childcontainer* |
-    | **파티션 키** | */primarykey* |
+    | **컨테이너 ID** | *`childcontainer`* |
+    | **파티션 키** | *`/primarykey`* |
     | **이 컨테이너의 전용 처리량 프로비전** | *이 옵션 선택.* |
     | **컨테이너 처리량** | *수동* |
-    | **RU/초** | *1000* |
+    | **RU/초** | *`1000`* |
 
 1. **데이터 탐색기** 창으로 돌아가서 **manualthroughputdb** 데이터베이스 노드를 확장한 다음, 계층 구조 내에서 **childcontainer** 컨테이너 노드를 관찰합니다.

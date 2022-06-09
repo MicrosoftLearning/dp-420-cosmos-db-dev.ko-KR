@@ -2,12 +2,12 @@
 lab:
   title: SDK를 사용하여 Azure Cosmos DB SQL API에 연결
   module: Module 3 - Connect to Azure Cosmos DB SQL API with the SDK
-ms.openlocfilehash: f9db9f7086f5d8f784ff1035d95218cb675e416f
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: df1c9fd90b00e59edbe9e078f8d99ccc043ec209
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025024"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919971"
 ---
 # <a name="connect-to-azure-cosmos-db-sql-api-with-the-sdk"></a>SDK를 사용하여 Azure Cosmos DB SQL API에 연결
 
@@ -17,7 +17,7 @@ ms.locfileid: "138025024"
 
 ## <a name="prepare-your-development-environment"></a>개발 환경 준비
 
-**DP-420** 에 대한 랩 코드 리포지토리를 이 랩에서 작업 중인 환경에 아직 복제하지 않은 경우 다음 단계를 수행합니다. 이미 복제했다면 이전에 복제한 폴더를 **Visual Studio Code** 에서 엽니다.
+**DP-420** 에 대한 랩 코드 리포지토리를 이 랩에서 작업 중인 환경에 아직 복제하지 않은 경우 다음 단계를 수행합니다. 그렇지 않으면 이전에 복제한 폴더를 **Visual Studio Code** 에서 엽니다.
 
 1. **Visual Studio Code** 를 시작합니다.
 
@@ -31,7 +31,7 @@ ms.locfileid: "138025024"
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API 계정 만들기
 
-Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이터베이스 서비스입니다. Azure Cosmos DB 계정을 처음으로 프로비전할 때 계정을 지원할 API(예: **Mongo API** 또는 **SQL API**)를 선택합니다. Azure Cosmos DB SQL API 계정 프로비전이 완료되면 엔드포인트 및 키를 검색하고 이를 사용하여 .NET용 Azure SDK 또는 선택한 다른 SDK를 사용하여 Azure Cosmos DB SQL API 계정에 연결할 수 있습니다.
+Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이터베이스 서비스입니다. Azure Cosmos DB 계정을 처음으로 프로비저닝할 때 계정을 지원할 API(예: **Mongo API** 또는 **SQL API**)를 선택합니다. Azure Cosmos DB SQL API 계정 프로비저닝이 완료되면 엔드포인트 및 키를 검색하고 이를 사용하여 .NET용 Azure SDK 또는 선택한 다른 SDK를 사용하여 Azure Cosmos DB SQL API 계정에 연결할 수 있습니다.
 
 1. 새 웹 브라우저 창 또는 탭에서 Azure Portal(``portal.azure.com``)로 이동합니다.
 
@@ -47,6 +47,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     | **위치** | 사용 가능한 지역을 선택합니다. |
     | **용량 모드** | *프로비전된 처리량* |
     | **무료 계층 할인 적용** | *적용 안 함* |
+    | **이 계정에서 프로비전할 수 있는 총 처리량 제한** | *선택 취소* |
 
     > &#128221; 랩 환경에서는 새 리소스 그룹을 만들지 못하게 하는 제한 사항이 있을 수 있습니다. 이러한 경우에는 미리 만든 기존 리소스 그룹을 사용합니다.
 
@@ -54,7 +55,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
 
 1. 새로 만든 **Azure Cosmos DB** 계정 리소스로 이동하여 **키** 창으로 이동합니다.
 
-1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히 다음에 주의합니다.
+1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히 다음 사항에 주의하세요.
 
     1. **URI** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **엔드포인트** 값을 사용합니다.
 
