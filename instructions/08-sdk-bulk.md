@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK를 사용하여 여러 문서를 대량으로 이동
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: a602f5e827c5183cfb2af8220490b7b672ee2638
-ms.sourcegitcommit: 9e320ed456eaaab98e80324267c710628b557b1c
+ms.openlocfilehash: 07d515ecfeb2ae59284d212323009770380ddcf0
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139039325"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919962"
 ---
 # <a name="move-multiple-documents-in-bulk-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK를 사용하여 여러 문서를 대량으로 이동
 
@@ -64,11 +64,11 @@ ms.locfileid: "139039325"
 
     | **설정** | **값** |
     | ---: | :--- |
-    | **데이터베이스 ID** | 새 &vert; cosmicworks 만들기  |
-    | **컨테이너 간에 처리량 공유** | 선택 안 함 |
-    | **컨테이너 ID** | *products* |
-    | **파티션 키** | */categoryId* |
-    | **컨테이너 처리량** | *자동 크기 조정* &vert; *4000* |
+    | **데이터베이스 ID** | 새로 만들기 &vert; *`cosmicworks`*  |
+    | **컨테이너 간에 처리량 공유** | *선택 안 함* |
+    | **컨테이너 ID** | *`products`* |
+    | **파티션 키** | *`/categoryId`* |
+    | **컨테이너 처리량** | 자동 스케일링 &vert; *`4000`*  |
 
 1. 웹 브라우저 창 또는 탭을 닫습니다.
 
@@ -100,6 +100,12 @@ ms.locfileid: "139039325"
 
     > &#128221; 이 명령은 시작 디렉터리가 **08-sdk-bulk** 폴더로 이미 설정된 터미널을 엽니다.
 
+1. 다음 명령을 사용하여 NuGet에서 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 패키지를 추가합니다.
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
+
 1. [dotnet build][docs.microsoft.com/dotnet/core/tools/dotnet-build] 명령을 사용하여 프로젝트를 빌드합니다.
 
     ```
@@ -120,8 +126,6 @@ ms.locfileid: "139039325"
     CosmosClientOptions options = new () 
     { 
         AllowBulkExecution = true 
-        , RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     ```
 
@@ -200,8 +204,6 @@ ms.locfileid: "139039325"
     CosmosClientOptions options = new () 
     { 
         AllowBulkExecution = true 
-        , RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     
     CosmosClient client = new (endpoint, key, options);  

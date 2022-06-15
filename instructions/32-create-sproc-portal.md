@@ -2,12 +2,12 @@
 lab:
   title: Azure Portal을 사용하여 저장 프로시저 만들기
   module: Module 13 - Create server-side programming constructs in Azure Cosmos DB SQL API
-ms.openlocfilehash: 0af86a04b0a5cc9a9786e88063e7f5590baa7089
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 0f390ab5e3bd796c3bfb17a060e2db4424e222e2
+ms.sourcegitcommit: 58caf52fefd9f9cbeeef3629e98245544a299b44
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025055"
+ms.lasthandoff: 06/02/2022
+ms.locfileid: "146027672"
 ---
 # <a name="create-a-stored-procedure-with-the-azure-portal"></a>Azure Portal을 사용하여 저장 프로시저 만들기
 
@@ -27,10 +27,10 @@ ms.locfileid: "138025055"
 
     | **설정** | **값** |
     | ---: | :--- |
-    | **구독** | *기존 Azure 구독* |
-    | **리소스 그룹** | *기존 리소스 그룹을 선택하거나 새로 만듭니다.* |
-    | **계정 이름** | *전역적으로 고유한 이름을 입력합니다.* |
-    | **위치** | *사용 가능한 지역을 선택합니다.* |
+    | **구독** | 기존 Azure 구독 |
+    | **리소스 그룹** | 기존 리소스 그룹을 선택하거나 새로 만듭니다. |
+    | **계정 이름** | 전역적으로 고유한 이름을 입력합니다. |
+    | **위치** | 사용 가능한 지역을 선택합니다. |
     | **용량 모드** | *프로비전된 처리량* |
     | **무료 계층 할인 적용** | *적용 안 함* |
 
@@ -44,7 +44,7 @@ ms.locfileid: "138025055"
 
     | **설정** | **값** |
     | ---: | :--- |
-    | **데이터베이스 ID** | *새로 만들기* &vert; *cosmicworks* |
+    | **데이터베이스 ID** | 새 &vert; cosmicworks 만들기  |
     | **컨테이너 간에 처리량 공유** | *이 옵션을 선택합니다.* |
     | **데이터베이스 처리량** | *수동* &vert; *400* |
     | **컨테이너 ID** | *products* |
@@ -208,7 +208,7 @@ ms.locfileid: "138025055"
     }
     ```
 
-1. **저장** 을 선택하여 저장 프로시저의 변경 내용을 유지합니다.
+1. **업데이트** 를 선택하여 저장 프로시저의 변경 내용을 유지합니다.
 
 1. **실행** 을 선택한 후 다음 입력 매개 변수를 사용하여 저장 프로시저를 실행합니다.
 

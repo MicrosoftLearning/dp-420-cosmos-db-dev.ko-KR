@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API 계정 키를 Azure Key Vault에 저장
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 929b8c5078ff27ae474f86393ad61f44dd3b66b3
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 56ecce7cf2b6460419f54813af06c0e0e01738b5
+ms.sourcegitcommit: b6d75bce14482279e6b4b3c8eb9d792a07516916
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025078"
+ms.lasthandoff: 05/26/2022
+ms.locfileid: "145893424"
 ---
 # <a name="store-azure-cosmos-db-sql-api-account-keys-in-azure-key-vault"></a>Azure Cosmos DB SQL API 계정 키를 Azure Key Vault에 저장
 
@@ -113,9 +113,9 @@ Azure Cosmos DB 계정에 연결하고 일부 컨테이너 및 문서를 만드�
     ```
 
 
-1. 이 명령은 웹앱의 셸을 만들어 여러 파일 및 디렉터리를 추가했습니다. 이미 필요한 모든 코드가 포함된 파일이 몇 개 있습니다. `.\KeyvaultFiles` 디렉터리의 해당 파일에 대해 `.\Controllers\HomeController.cs` 파일과 `.\Views\Home\Index.cshtml` 파일을 바꿉니다.
+1. 이 명령은 웹앱의 셸을 만들어 여러 파일 및 디렉터리를 추가했습니다. 이미 필요한 모든 코드가 포함된 파일이 몇 개 있습니다. 파일 **.\Controllers\HomeController.cs** 및 **.\Views\Home\Index.cshtml** 을 **.\KeyvaultFiles** 디렉터리에 있는 각 파일로 바꿉니다.
 
-1. 파일을 바꾸면 `.\KeyvaultFiles` 디렉터리를 삭제합니다.
+1. 파일을 바꾼 후 _ *.\KeyvaultFiles** 디렉터리를 ***DELETE** _합니다.
 
 ## <a name="import-the-multiple-missing-libraries-into-the-net-script"></a>누락된 여러 라이브러리를 .NET 스크립트로 가져오기
 
@@ -187,7 +187,7 @@ Azure Cosmos DB 계정에 연결하고 일부 컨테이너 및 문서를 만드�
     - 줄 104~105에서는 Azure Key Vault에 연결할 Key Vault 클라이언트를 준비합니다.  웹앱 토큰을 매개 변수로 보냅니다. 
     - 줄 107~108에서는 Key Vault 클라이언트에 해당 키 자격 증명 모음에 저장된 비밀을 반환하는 **비밀 식별자** URL 주소를 제공합니다. 
 
-1.  웹앱을 배포하기 전에 **비밀 식별자** URL을 보내야 합니다.  줄 107에서는 문자열 **`<Key Vault Secret Identifier>`** 를 비밀 섹션에 기록한 **비밀 식별자** URL로 바꾸고 파일을 저장합니다. 
+1.  웹앱을 배포하기 전에 **비밀 식별자** URL을 보내야 합니다.  줄 *107* 에서는 문자열 * **<Key Vault Secret Identifier>** _를 *secret* 섹션에 기록한 _ *비밀 식별자** URL로 바꾸고 파일을 저장합니다.
 
 ```
         var KeyVaultSecret = await KVClient.GetSecretAsync("<Key Vault Secret Identifier>")
@@ -214,6 +214,8 @@ Visual Studio에서 명령 팔레트(**Ctrl+Shift+P**)를 가져오고 Azure 앱
 1. Visual Studio Code에서 명령 팔레트를 열고 Azure App Service: 새 웹앱 만들기...(고급)를 검색합니다.
 
 1. Azure에 로그인...을 선택합니다. 이 옵션은 웹 브라우저 창을 열고 로그인 프로세스를 수행한 후, 완료되면 브라우저를 닫습니다.
+
+1. (선택 사항) 구독을 요청하는 경우 해당 구독을 선택합니다.
 
 1. 웹앱의 전역적으로 고유한 이름을 입력합니다.
 

@@ -2,12 +2,12 @@
 lab:
   title: 오프라인 개발을 위한 Azure Cosmos DB SQL API SDK 구성
   module: Module 3 - Connect to Azure Cosmos DB SQL API with the SDK
-ms.openlocfilehash: d6d5bad51d4adc029e901352f0becc9268acab3e
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: f977dc20266bbd843ab9c94bae8cf08672b99dd9
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025079"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919968"
 ---
 # <a name="configure-the-azure-cosmos-db-sql-api-sdk-for-offline-development"></a>오프라인 개발을 위한 Azure Cosmos DB SQL API SDK 구성
 
@@ -19,7 +19,7 @@ Azure Cosmos DB Emulator는 개발 및 테스트를 위해 Azure Cosmos DB 서�
 
 **DP-420** 에 대한 랩 코드 리포지토리를 이 랩에서 작업 중인 환경에 아직 복제하지 않은 경우 다음 단계를 수행합니다. 그렇지 않으면 이전에 복제한 폴더를 **Visual Studio Code** 에서 엽니다.
 
-1. **Visual Studio Code** 시작
+1. **Visual Studio Code** 를 시작합니다.
 
     > &#128221; Visual Studio Code 인터페이스에 익숙하지 않은 경우 [시작 설명서][code.visualstudio.com/docs/getstarted]를 검토하세요.
 
@@ -37,7 +37,7 @@ Azure Cosmos DB Emulator는 개발 및 테스트를 위해 Azure Cosmos DB 서�
 
     > &#128221; 에뮬레이터를 시작하기 위해 관리자에게 액세스 권한을 부여하라는 메시지가 표시될 수 있습니다. 랩 환경에서 **관리자** 계정에는 **학생** 계정과 동일한 암호가 있습니다.
 
-    > &#128161; Azure Cosmos DB Emulator는 Windows 작업 표시줄과 시작 메뉴 모두에 고정됩니다.
+    > &#128161; Azure Cosmos DB Emulator는 Windows 작업 표시줄과 시작 메뉴 모두에 고정됩니다. ***에뮬레이터가 고정된 아이콘에서 시작되지 않으면** _ _ *C:\Program Files\Azure Cosmos DB Emulator\CosmosDB.Emulator.exe** **파일** 을 두 번 클릭하여 엽니다. 에뮬레이터가 시작되는 데 20~30초가 걸립니다.
 
 1. 에뮬레이터가 기본 브라우저를 자동으로 열고 **localhost:8081/_explorer/index.html** 방문 페이지로 이동할 때까지 기다립니다.
 
@@ -61,17 +61,15 @@ Azure Cosmos DB Emulator는 개발 및 테스트를 위해 Azure Cosmos DB 서�
 
 1. **05-sdk-offline** 폴더 내에서 **script.cs** 코드 파일을 엽니다.
 
-    > &#128221; **[Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1]** 라이브러리는 이미 NuGet에서 미리 가져왔습니다.
-
 1. 값이 Azure Cosmos DB Emulator의 **연결 문자열** 로 설정된 **connectionString** 이라는 기존 변수를 업데이트합니다.
   
     ```
     string connectionString = "AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
     ```
 
-    > &#128221; 에뮬레이터의 URI는 일반적으로 ``localhost:[port]`` 기본 포트가 **8081** 로 설정된 SSL을 사용합니다.
+    > &#128221; 에뮬레이터의 URI는 일반적으로 기본 포트가 _*8081**로 설정된 SSL을 사용하는 ***localhost:[port]** _입니다.
 
-    > &#128221; ``C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==``는 에뮬레이터의 모든 설치에 대한 기본 키입니다. 이 키는 명령줄 옵션을 사용하여 변경할 수 있습니다.
+    > &#128221; *C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==* 는 모든 에뮬레이터 설치의 기본 키입니다. 이 키는 명령줄 옵션을 사용하여 변경할 수 있습니다.
 
 1. 에뮬레이터 내에서 만들려는 새 데이터베이스(**cosmicworks**)의 이름을 전달하고 결과를 [Database][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.database] 형식의 변수에 저장하는 **client** 변수의 [CreateDatabaseIfNotExistsAsync][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclient.createdatabaseifnotexistsasync] 메서드를 비동기적으로 호출합니다.
 
@@ -104,6 +102,12 @@ Azure Cosmos DB Emulator는 개발 및 테스트를 위해 Azure Cosmos DB 서�
 1. **Visual Studio Code** 에서 **05-sdk-offline** 폴더의 상황에 맞는 메뉴를 연 다음, **통합 터미널에서 열기** 를 선택하여 새 터미널 인스턴스를 엽니다.
 
     > &#128221; 이 명령은 시작 디렉터리가 **05-sdk-offline** 폴더로 이미 설정된 터미널을 엽니다.
+
+1. 다음 명령을 사용하여 NuGet에서 [ Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 패키지를 추가합니다.
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
 
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 명령을 사용하여 프로젝트를 빌드하고 실행합니다.
 

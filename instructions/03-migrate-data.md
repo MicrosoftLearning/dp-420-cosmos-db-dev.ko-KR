@@ -2,12 +2,12 @@
 lab:
   title: Azure Data Factory를 사용하여 기존 데이터 마이그레이션
   module: Module 2 - Plan and implement Azure Cosmos DB SQL API
-ms.openlocfilehash: 0ea95a45f5e20ef089d712939fde0c3d8767601e
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 15a34904589e5ce2e266ec3078f9b794ae744d73
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025039"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919956"
 ---
 # <a name="migrate-existing-data-using-azure-data-factory"></a>Azure Data Factory를 사용하여 기존 데이터 마이그레이션
 
@@ -29,12 +29,13 @@ Azure Data Factory에서 Azure Cosmos DB는 데이터 수집 원본 및 데이�
 
     | **설정** | **값** |
     | ---: | :--- |
-    | **구독** | *기존 Azure 구독* |
-    | **리소스 그룹** | *기존 리소스 그룹 선택 또는 새로 민들기.* |
-    | **계정 이름** | *전역적으로 고유한 이름 입력.* |
-    | **위치** | *사용 가능한 지역 선택.* |
+    | **구독** | 기존 Azure 구독 |
+    | **리소스 그룹** | 기존 리소스 그룹을 선택하거나 새로 만듭니다. |
+    | **계정 이름** | 전역적으로 고유한 이름을 입력합니다. |
+    | **위치** | 사용 가능한 지역을 선택합니다. |
     | **용량 모드** | *프로비전된 처리량* |
     | **무료 계층 할인 적용** | *적용 안 함* |
+    | **이 계정에서 프로비저닝할 수 있는 총 처리량 제한** | *선택 취소* |
 
     > &#128221; 랩 환경에서는 새 리소스 그룹을 만들지 못하게 하는 제한 사항이 있을 수 있습니다. 이러한 경우에는 미리 만든 기존 리소스 그룹을 사용합니다.
 
@@ -42,7 +43,7 @@ Azure Data Factory에서 Azure Cosmos DB는 데이터 수집 원본 및 데이�
 
 1. 새로 만든 **Azure Cosmos DB** 계정 리소스로 이동하여 **키** 창으로 이동합니다.
 
-1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히:
+1. 이 창에는 SDK에서 계정에 연결하는 데 필요한 연결 세부 정보 및 자격 증명이 포함되어 있습니다. 특히 다음 사항에 주의하세요.
 
     1. **URI** 필드의 값을 기록합니다. 이 연습의 뒷부분에서 이 **엔드포인트** 값을 사용합니다.
 
@@ -105,10 +106,10 @@ Azure Data Factory에서 Azure Cosmos DB는 데이터 수집 원본 및 데이�
     | **설정** | **값** |
     | --: | :-- |
     | **데이터베이스 ID** | *기존 항목 사용* &vert; *cosmicworks* |
-    | **컨테이너 ID** | *flatproducts* |
-    | **파티션 키** | */category* |
+    | **컨테이너 ID** | *`flatproducts`* |
+    | **파티션 키** | *`/category`* |
     | **컨테이너 처리량(자동 크기 조정)** | *수동* |
-    | **RU/초** | *400* |
+    | **RU/초** | *`400`* |
 
 1. **데이터 탐색기** 창으로 돌아가서 **cosmicworks** 데이터베이스 노드를 확장한 다음, 계층 내의 **flatproducts** 컨테이너 노드를 관찰합니다.
 
@@ -122,9 +123,9 @@ Azure Data Factory에서 Azure Cosmos DB는 데이터 수집 원본 및 데이�
 
     | **설정** | **값** |
     | ---: | :--- |
-    | **구독** | *기존 Azure 구독* |
-    | **리소스 그룹** | *기존 리소스 그룹 선택 또는 새로 민들기.* |
-    | **이름** | *전역적으로 고유한 이름 입력.* |
+    | **구독** | 기존 Azure 구독 |
+    | **리소스 그룹** | 기존 리소스 그룹을 선택하거나 새로 만듭니다. |
+    | **이름** | 전역적으로 고유한 이름을 입력합니다. |
     | **지역** | *사용 가능한 지역 선택.* |
     | **버전** | *V2* |
     | **Git 구성** | *나중에 Git 구성* |
@@ -151,7 +152,7 @@ Azure Data Factory에서 Azure Cosmos DB는 데이터 수집 원본 및 데이�
 
     | **설정** | **값** |
     | ---: | :--- |
-    | **이름** | *CosmosSqlConn* |
+    | **이름** | *`CosmosSqlConn`* |
     | **통합 런타임을 통해 연결** | *AutoResolveIntegrationRuntime* |
     | **인증 방법** | *기본 키* &vert; *연결 문자열* |
     | **계정 선택 방법** | *Azure 구독에서* |
@@ -182,7 +183,7 @@ Azure Data Factory에서 Azure Cosmos DB는 데이터 수집 원본 및 데이�
 
 1. **대상** 목록에서 **flatproducts** 를 선택한 다음, **다음** 을 선택하여 마법사의 **설정** 단계로 이동합니다.
 
-1. 마법사의 **설정** 단계에서 **작업 이름** 필드에 **FlattenAndMoveData** 를 입력합니다.
+1. 마법사의 **설정** 단계에서 **작업 이름** 필드에 **`FlattenAndMoveData`** 를 입력합니다.
 
 1. 나머지 모든 필드를 기본 빈 값으로 두고 **다음** 을 선택하여 마법사의 마지막 단계로 이동합니다.
 
