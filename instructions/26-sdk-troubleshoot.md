@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK를 사용하여 애플리케이션 문제 해결
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 49708e1ad77cf0e9b828b3a8571516d26f779071
-ms.sourcegitcommit: b6d75bce14482279e6b4b3c8eb9d792a07516916
+ms.openlocfilehash: 9e1d3220eac65806d0512c6a22b3ff1b4fe6d778
+ms.sourcegitcommit: e85dbb2b871e28631beea55bfbb47191bd979628
 ms.translationtype: HT
 ms.contentlocale: ko-KR
-ms.lasthandoff: 05/26/2022
-ms.locfileid: "145893427"
+ms.lasthandoff: 06/13/2022
+ms.locfileid: "146316631"
 ---
 # <a name="troubleshoot-an-application-using-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK를 사용하여 애플리케이션 문제 해결
 
@@ -207,7 +207,7 @@ Azure Cosmos DB는 여러 API를 지원하는 클라우드 기반 NoSQL 데이�
     Can not insert a duplicate partition key, customer with the same ID already exists.
     ```
 
-1. 이 코드는 *403* 및 *409* 예외에 대한 오류 처리를 추가했습니다. 이제 몇 가지 일반적인 통신 유형의 예외에 대한 코드를 추가하겠습니다. 세 가지 일반적인 통신 유형의 예외는 각각 *429*, *503*, *408* 이거나 너무 많은 요청, 서비스를 사용할 수 없음, 요청 시간 초과입니다. 이제 줄 *66* 주위에 **default** 문이 있어야 하므로 이전 **break;** 바로 뒤 및 **default** 문 바로 앞에 아래 코드를 추가합니다.  이 코드는 이러한 통신 예외를 찾는지 확인하며 찾는 경우 10분 동안 기다린 다음, 문서를 한 번 더 삽입해 봅니다.  코드 외에 다음을 추가합니다.
+1. 이 코드는 *403* 및 *409* 예외에 대한 오류 처리를 추가했습니다. 이제 몇 가지 일반적인 통신 유형의 예외에 대한 코드를 추가하겠습니다. 세 가지 일반적인 통신 유형의 예외는 각각 *429*, *503*, *408* 이거나 너무 많은 요청, 서비스를 사용할 수 없음, 요청 시간 초과입니다. 이제 줄 *66* 주위에 **default** 문이 있어야 하므로 이전 **break;** 바로 뒤 및 **default** 문 바로 앞에 아래 코드를 추가합니다.  이 코드는 이러한 통신 예외를 찾는지 확인하며 찾는 경우 10초 동안 기다린 다음, 문서를 한 번 더 삽입해 봅니다.  코드 외에 다음을 추가합니다.
 
     ```C#
                         case ("TooManyRequests"):
